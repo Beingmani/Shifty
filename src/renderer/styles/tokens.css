@@ -1,0 +1,105 @@
+/*
+ * Shifty design tokens — ported from the Stasho design system.
+ *
+ * BRAND PRIMITIVES: edit once to retheme the whole app.
+ * CHROME TOKENS: theme-aware (light + dark) — used by floating chrome,
+ * buttons, inset fields. Control metrics are shared across themes.
+ */
+
+:root {
+  /* ── Brand primitives (theme-independent) ─────────────────────────── */
+  --brand-primary: #008e79;
+  --brand-primary-hover: #00b16a;
+  --brand-secondary: #3de8a8;
+  --brand-on-primary: #ffffff;
+
+  --control-height: 34px;
+  --control-radius: 10px;
+  --chrome-radius: 14px;
+  --pill-radius: 999px;
+
+  --grid-gutter: 20px;
+  --stage-inset-left: var(--titlebar-left-pad, 20px);
+  --stage-inset-right: 20px;
+  --toolbar-float-height: 78px;
+  --profile-bar-gap: 8px;
+  --profile-bar-height: 52px;
+
+  /* ── CTA (brand-derived, same hues in both themes) ───────────────── */
+  --cta-bg: var(--brand-primary);
+  --cta-bg-hover: var(--brand-primary-hover);
+  --cta-fg: var(--brand-on-primary);
+
+  --destructive: #e5484d;
+  --destructive-hover: #f2555a;
+  --destructive-fg: #ffffff;
+}
+
+/* ── Light theme chrome ─────────────────────────────────────────────── */
+:root,
+:root[data-theme="light"] {
+  --chrome-bg: #ffffff;
+  --chrome-border: rgba(0, 0, 0, 0.08);
+  --chrome-border-strong: rgba(0, 0, 0, 0.12);
+  --chrome-inset: rgba(255, 255, 255, 0.85);
+  --chrome-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+    0 10px 30px rgba(0, 0, 0, 0.08);
+  --chrome-shadow-scrolled:
+    0 0 0 1px rgba(0, 0, 0, 0.06) inset,
+    0 14px 36px rgba(0, 0, 0, 0.12);
+
+  --chrome-text: rgba(0, 0, 0, 0.92);
+  --chrome-text-secondary: rgba(0, 0, 0, 0.72);
+  --chrome-text-muted: rgba(0, 0, 0, 0.50);
+  --chrome-text-faint: rgba(0, 0, 0, 0.35);
+  --chrome-separator: rgba(0, 0, 0, 0.20);
+
+  --chrome-fill-1: rgba(0, 0, 0, 0.03);
+  --chrome-fill-2: rgba(0, 0, 0, 0.04);
+  --chrome-fill-3: rgba(0, 0, 0, 0.06);
+  --chrome-fill-4: rgba(0, 0, 0, 0.08);
+  --chrome-fill-5: rgba(0, 0, 0, 0.10);
+
+  --chrome-hover: rgba(120, 120, 128, 0.10);
+  --chrome-border-subtle: rgba(0, 0, 0, 0.05);
+
+  --cta-border: rgba(0, 0, 0, 0.06);
+
+  --scrollbar-thumb: color-mix(in srgb, var(--chrome-text) 20%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--chrome-text) 32%, transparent);
+}
+
+/* ── Dark theme chrome ──────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  --chrome-bg: #111114;
+  --chrome-border: rgba(255, 255, 255, 0.08);
+  --chrome-border-strong: rgba(255, 255, 255, 0.12);
+  --chrome-inset: rgba(0, 0, 0, 0.35);
+  --chrome-shadow:
+    0 0 0 1px var(--chrome-inset) inset,
+    0 10px 30px rgba(0, 0, 0, 0.22);
+  --chrome-shadow-scrolled:
+    0 0 0 1px var(--chrome-inset) inset,
+    0 14px 36px rgba(0, 0, 0, 0.32);
+
+  --chrome-text: rgba(255, 255, 255, 0.95);
+  --chrome-text-secondary: rgba(255, 255, 255, 0.85);
+  --chrome-text-muted: rgba(255, 255, 255, 0.55);
+  --chrome-text-faint: rgba(255, 255, 255, 0.35);
+  --chrome-separator: rgba(255, 255, 255, 0.22);
+
+  --chrome-fill-1: rgba(255, 255, 255, 0.04);
+  --chrome-fill-2: rgba(255, 255, 255, 0.05);
+  --chrome-fill-3: rgba(255, 255, 255, 0.06);
+  --chrome-fill-4: rgba(255, 255, 255, 0.09);
+  --chrome-fill-5: rgba(255, 255, 255, 0.10);
+
+  --chrome-hover: rgba(120, 120, 128, 0.16);
+  --chrome-border-subtle: rgba(255, 255, 255, 0.05);
+
+  --cta-border: rgba(255, 255, 255, 0.10);
+
+  --scrollbar-thumb: color-mix(in srgb, var(--chrome-text) 24%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--chrome-text) 38%, transparent);
+}
