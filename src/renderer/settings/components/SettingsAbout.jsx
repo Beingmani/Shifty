@@ -12,11 +12,17 @@ const BUILT_WITH = [
   { name: 'Lucide', role: 'Icons', url: 'https://lucide.dev/' },
 ];
 
+const FALLBACK_VERSION = import.meta.env.VITE_APP_VERSION || '';
+
 function openExternal(url) {
   window.shifty?.shell?.openUrl?.(url);
 }
 
-export default function SettingsAbout() {
+function resolveVersion(appInfo, current) {
+  return appInfo?.version || current?.version || FALLBACK_VERSION || '';
+}
+
+export default function SettingsAbout({ active, onOpenGuide, onUpdateFound }) {
   const [info, setInfo] = useState(null);
   const [updateState, setUpdateState] = useState({ checking: false, message: '' });
   const [updateAvailable, setUpdateAvailable] = useState(null);
@@ -29,48 +35,59 @@ export default function SettingsAbout() {
       ]);
       setInfo({
         ...appInfo,
-        version: appInfo?.version || current?.version || '',
+        version: resolveVersion(appInfo, current),
       });
     } catch {
-      setInfo(null);
+      setInfo({ name: 'Shifty', version: FALLBACK_VERSION, isPackaged: false });
     }
   }, []);
 
   useEffect(() => {
+    if (!active) return;
     loadInfo();
-  }, [loadInfo]);
+  }, [active, loadInfo]);
 
   const checkUpdates = useCallback(async () => {
     setUpdateState({ checking: true, message: '' });
     try {
       const result = await window.shifty.updates.check();
       if (result?.available) {
-        setUpdateAvailable(result);
+        const payload = {
+          version: result.version,
+          url: result.url,
+          name: result.name,
+          current: result.current,
+        };
+        setUpdateAvailable(payload);
+        onUpdateFound?.(payload);
         setUpdateState({ checking: false, message: `Version ${result.version} is available.` });
       } else if (result?.error) {
         setUpdateState({ checking: false, message: 'Could not check for updates.' });
       } else {
         setUpdateAvailable(null);
+        onUpdateFound?.(null);
         setUpdateState({
           checking: false,
           message: result?.latest
-            ? `You’re on the latest release (${result.current}).`
-            : `You’re on ${result?.current || 'the current version'}.`,
+            ? `You’re on the latest release (v${result.current}).`
+            : result?.dev
+              ? `You’re on v${result.current || FALLBACK_VERSION}. (Dev build — release check still works.)`
+              : `You’re on v${result?.current || FALLBACK_VERSION}.`,
         });
       }
     } catch {
       setUpdateState({ checking: false, message: 'Could not check for updates.' });
     }
-  }, []);
+  }, [onUpdateFound]);
+
+  const version = info?.version || FALLBACK_VERSION;
 
   return (
     <div className="settings-about">
       <div className="settings-about-hero">
         <div className="settings-about-title-row">
           <h3 className="settings-about-name">{info?.name || 'Shifty'}</h3>
-          <span className="settings-about-version">
-            {info?.version ? `v${info.version}` : '…'}
-          </span>
+          <span className="settings-about-version">{version ? `v${version}` : '…'}</span>
         </div>
         <p className="settings-about-tagline">
           Profile-based app switcher for macOS. Your profiles and settings stay on this Mac.
@@ -82,6 +99,10 @@ export default function SettingsAbout() {
 
       <div className="settings-about-group">
         <h4 className="settings-about-group-title">Updates</h4>
+        <div className="settings-about-row">
+          <span className="settings-about-row-label">Current version</span>
+          <span className="settings-about-row-value">{version ? `v${version}` : '…'}</span>
+        </div>
         <div className="settings-about-row">
           <span className="settings-about-row-label">Check for updates</span>
           <button
@@ -121,6 +142,14 @@ export default function SettingsAbout() {
 
       <div className="settings-about-group">
         <h4 className="settings-about-group-title">Support</h4>
+        {onOpenGuide ? (
+          <div className="settings-about-row">
+            <span className="settings-about-row-label">Getting started</span>
+            <button type="button" className="settings-about-link" onClick={onOpenGuide}>
+              Open guide
+            </button>
+          </div>
+        ) : null}
         <div className="settings-about-row">
           <span className="settings-about-row-label">Report a bug</span>
           <button type="button" className="settings-about-link" onClick={() => openExternal(ISSUES_URL)}>

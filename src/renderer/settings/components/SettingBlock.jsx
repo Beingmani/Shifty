@@ -10,9 +10,13 @@ export default function SettingBlock({
   children,
   muted = false,
   className = '',
+  tourId,
 }) {
   return (
-    <section className={`setting-block ${muted ? 'setting-block-muted' : ''} ${className}`.trim()}>
+    <section
+      className={`setting-block ${muted ? 'setting-block-muted' : ''} ${className}`.trim()}
+      data-tour={tourId || undefined}
+    >
       <header className="setting-block-header">
         <div className="setting-block-heading">
           {Icon && (

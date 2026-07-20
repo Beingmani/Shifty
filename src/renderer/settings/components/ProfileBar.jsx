@@ -41,7 +41,7 @@ export default function ProfileBar({ profiles, activeProfileId, selectedId, onSe
   }, [profiles]);
 
   return (
-    <div className="profile-bar">
+    <div className="profile-bar" data-tour="profiles">
       <div className="profile-bar-chips">
         {profiles.map((p) => {
           const isSelected = p.id === selectedId;
@@ -74,7 +74,13 @@ export default function ProfileBar({ profiles, activeProfileId, selectedId, onSe
             </button>
           );
         })}
-        <button type="button" className="profile-chip profile-chip-add" onClick={onAdd} title="New profile">
+        <button
+          type="button"
+          className="profile-chip profile-chip-add"
+          data-tour="new-profile"
+          onClick={onAdd}
+          title="New profile"
+        >
           <Plus size={14} strokeWidth={2.25} />
           <span>New profile</span>
         </button>

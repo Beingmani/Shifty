@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useStore } from '../shared/useStore.js';
+import { readOnboardingCompleted } from '../shared/onboarding.js';
 import Navbar from './components/Navbar.jsx';
 import ProfileBar from './components/ProfileBar.jsx';
 import ProfileEditor from './components/ProfileEditor.jsx';
 import SettingsModal from './components/SettingsModal.jsx';
 import TemplatePicker from './components/TemplatePicker.jsx';
+import WelcomeEmpty from './components/WelcomeEmpty.jsx';
+import OnboardingGuide from './components/OnboardingGuide.jsx';
 import UpdatePill from './components/UpdatePill.jsx';
 import WhatsNewModal from './components/WhatsNewModal.jsx';
 
@@ -17,6 +20,7 @@ export default function App() {
   const [activating, setActivating] = useState(false);
   const [updateAvailable, setUpdateAvailable] = useState(null);
   const [whatsNewOpen, setWhatsNewOpen] = useState(false);
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
 
   React.useEffect(() => {
     if (!snapshot) return;
@@ -26,13 +30,21 @@ export default function App() {
   }, [snapshot, selectedId]);
 
   React.useEffect(() => {
+    if (!snapshot || snapshot.profiles.length > 0) return undefined;
+    if (readOnboardingCompleted()) return undefined;
+    const t = window.setTimeout(() => setOnboardingOpen(true), 500);
+    return () => window.clearTimeout(t);
+  }, [snapshot]);
+
+  React.useEffect(() => {
+    if (onboardingOpen) return undefined;
     const seen = localStorage.getItem('shifty.lastSeenVersion');
     if (seen !== import.meta.env.VITE_APP_VERSION) {
       const t = window.setTimeout(() => setWhatsNewOpen(true), 1200);
       return () => window.clearTimeout(t);
     }
     return undefined;
-  }, []);
+  }, [onboardingOpen]);
 
   React.useEffect(() => {
     const unsub = window.shifty?.onUpdateAvailable?.((payload) => {
@@ -64,8 +76,24 @@ export default function App() {
     setSettingsOpen(true);
   }, []);
 
+  const openOnboarding = useCallback(() => {
+    setOnboardingOpen(true);
+  }, []);
+
+  const closeOnboarding = useCallback(() => {
+    setOnboardingOpen(false);
+  }, []);
+
   const onOpenUpdate = useCallback(async () => {
     await window.shifty?.updates?.open?.();
+  }, []);
+
+  const onUpdateFound = useCallback((payload) => {
+    if (payload?.version) {
+      setUpdateAvailable(payload);
+    } else {
+      setUpdateAvailable(null);
+    }
   }, []);
 
   if (!snapshot) return null;
@@ -103,6 +131,7 @@ export default function App() {
                   activating={activating}
                   isActiveProfile={selected?.id === snapshot.activeProfileId}
                   onOpenSettings={() => openSettings('appearance')}
+                  onOpenGuide={openOnboarding}
                   onActivate={activateSelected}
                   onGoHome={() => setSelectedId(snapshot.profiles[0]?.id ?? null)}
                   onSelectProfile={setSelectedId}
@@ -125,16 +154,12 @@ export default function App() {
                 {selected ? (
                   <ProfileEditor key={selected.id} profile={selected} />
                 ) : (
-                  <div className="content-panel-card empty-state-card">
-                    <h2 className="empty-title">Welcome to Shifty</h2>
-                    <p className="empty-description">
-                      Start from a template like Work or Personal — we’ll add apps we find on this
-                      Mac. Edit anytime.
-                    </p>
-                    <button type="button" className="btn btn-primary" onClick={openTemplatePicker}>
-                      Choose a template
-                    </button>
-                  </div>
+                  <WelcomeEmpty
+                    hotkey={snapshot.settings.hotkey}
+                    onGetStarted={openTemplatePicker}
+                    onCreated={onTemplateCreated}
+                    onShowGuide={openOnboarding}
+                  />
                 )}
               </div>
             </div>
@@ -147,6 +172,19 @@ export default function App() {
         onClose={() => setSettingsOpen(false)}
         settings={snapshot.settings}
         initialSection={settingsSection}
+        onOpenGuide={() => {
+          setSettingsOpen(false);
+          openOnboarding();
+        }}
+        onUpdateFound={onUpdateFound}
+      />
+
+      <OnboardingGuide
+        open={onboardingOpen}
+        hotkey={snapshot.settings.hotkey}
+        hasProfiles={snapshot.profiles.length > 0}
+        onClose={closeOnboarding}
+        onFinish={openTemplatePicker}
       />
 
       <WhatsNewModal

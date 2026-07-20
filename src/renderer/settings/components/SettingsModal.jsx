@@ -111,7 +111,14 @@ function flattenSections(sections) {
   return sections.flatMap((s) => s.items);
 }
 
-export default function SettingsModal({ open, onClose, settings: initialSettings, initialSection = 'appearance' }) {
+export default function SettingsModal({
+  open,
+  onClose,
+  settings: initialSettings,
+  initialSection = 'appearance',
+  onOpenGuide,
+  onUpdateFound,
+}) {
   const [activeSection, setActiveSection] = useState('appearance');
   const [appearance, setAppearance] = useState('system');
   const [hotkey, setHotkey] = useState('Alt+Space');
@@ -120,11 +127,22 @@ export default function SettingsModal({ open, onClose, settings: initialSettings
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [isDev, setIsDev] = useState(false);
+  const [appVersion, setAppVersion] = useState(import.meta.env.VITE_APP_VERSION || '');
   const initialRef = useRef(null);
 
   useEffect(() => {
     window.shifty.isDev?.().then((v) => setIsDev(!!v));
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    window.shifty.appInfo
+      ?.get?.()
+      .then((info) => {
+        if (info?.version) setAppVersion(info.version);
+      })
+      .catch(() => {});
+  }, [open]);
 
   const navSections = useMemo(() => buildNavSections(isDev), [isDev]);
   const navItems = useMemo(() => flattenSections(navSections), [navSections]);
@@ -255,7 +273,13 @@ export default function SettingsModal({ open, onClose, settings: initialSettings
       case 'whatsnew':
         return <SettingsWhatsNew />;
       case 'about':
-        return <SettingsAbout />;
+        return (
+          <SettingsAbout
+            active={activeSection === 'about'}
+            onOpenGuide={onOpenGuide}
+            onUpdateFound={onUpdateFound}
+          />
+        );
       default:
         return null;
     }
@@ -302,14 +326,19 @@ export default function SettingsModal({ open, onClose, settings: initialSettings
         {saveError && <div className="settings-banner-error">{saveError}</div>}
 
         <footer className="settings-footer">
-          <button type="button" className="btn btn-chrome" onClick={handleClose}>
-            {readOnlySection ? 'Close' : 'Cancel'}
-          </button>
-          {!readOnlySection ? (
-            <button type="button" className="btn btn-primary" onClick={handleSave} disabled={saving}>
-              {saving ? 'Saving…' : 'Save'}
-            </button>
+          {appVersion ? (
+            <span className="settings-footer-version">Shifty v{appVersion}</span>
           ) : null}
+          <div className="settings-footer-actions">
+            <button type="button" className="btn btn-chrome" onClick={handleClose}>
+              {readOnlySection ? 'Close' : 'Cancel'}
+            </button>
+            {!readOnlySection ? (
+              <button type="button" className="btn btn-primary" onClick={handleSave} disabled={saving}>
+                {saving ? 'Saving…' : 'Save'}
+              </button>
+            ) : null}
+          </div>
         </footer>
       </div>
     </div>,

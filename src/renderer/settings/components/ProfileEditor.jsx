@@ -69,6 +69,7 @@ export default function ProfileEditor({ profile }) {
 
       <SettingBlock
         className="setting-block-apps"
+        tourId="apps"
         icon={AppWindow}
         title="Apps"
         description="Open together when you activate this profile."
@@ -95,6 +96,7 @@ export default function ProfileEditor({ profile }) {
       </SettingBlock>
 
       <SettingBlock
+        tourId="schedules"
         icon={Calendar}
         title="Schedule"
         description="When this profile should kick in."

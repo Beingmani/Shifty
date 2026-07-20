@@ -84,10 +84,11 @@ async function fetchLatestRelease() {
   return best;
 }
 
-export async function checkForUpdates({ quiet = false } = {}) {
-  if (!app.isPackaged) return { available: false, current: getCurrentVersion() };
-
+export async function checkForUpdates({ quiet = false, allowDev = false } = {}) {
   const current = getCurrentVersion();
+  if (!app.isPackaged && !allowDev) {
+    return { available: false, current, dev: true };
+  }
   const dismissed = normalizeTag(store.getSettings()?.dismissedUpdateVersion);
 
   try {
@@ -161,7 +162,7 @@ function registerUpdateHandlers(ipcMain) {
   if (handlersRegistered) return;
   handlersRegistered = true;
 
-  ipcMain.handle('update:check', () => checkForUpdates({ quiet: true }));
+  ipcMain.handle('update:check', () => checkForUpdates({ quiet: true, allowDev: true }));
   ipcMain.handle('update:open', () => openUpdateDialog());
   ipcMain.handle('update:dismiss', (_e, version) => dismissUpdate(version));
   ipcMain.handle('update:get-current', () => ({ version: getCurrentVersion() }));

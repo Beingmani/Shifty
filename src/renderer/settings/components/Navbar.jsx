@@ -1,4 +1,5 @@
 import React from 'react';
+import { CircleHelp } from 'lucide-react';
 import ThemeToggle from './ThemeToggle.jsx';
 import ProfileSwitcher from './ProfileSwitcher.jsx';
 import appIcon from '@assets/app-icon.png';
@@ -12,6 +13,7 @@ export default function Navbar({
   activating,
   isActiveProfile,
   onOpenSettings,
+  onOpenGuide,
   onActivate,
   onGoHome,
   onSelectProfile,
@@ -48,7 +50,13 @@ export default function Navbar({
           )}
         </div>
 
-        <button type="button" className="navbar-search-trigger" disabled aria-hidden="true">
+        <button
+          type="button"
+          className="navbar-search-trigger"
+          data-tour="switcher"
+          disabled
+          aria-hidden="true"
+        >
           <span className="navbar-search-text">Press {hotkeyLabel} to switch</span>
           <kbd className="navbar-search-kbd">{hotkeyLabel}</kbd>
         </button>
@@ -56,9 +64,23 @@ export default function Navbar({
         <div className="navbar-actions">
           <ThemeToggle />
 
+          {onOpenGuide ? (
+            <button
+              type="button"
+              className="btn btn-chrome btn-icon-only"
+              data-tour="guide"
+              onClick={onOpenGuide}
+              title="Guide"
+              aria-label="Open guide"
+            >
+              <CircleHelp size={15} strokeWidth={1.6} aria-hidden="true" />
+            </button>
+          ) : null}
+
           <button
             type="button"
             className="btn btn-chrome btn-icon-only"
+            data-tour="settings"
             onClick={onOpenSettings}
             title="Settings"
             aria-label="Settings"
@@ -77,19 +99,21 @@ export default function Navbar({
             </svg>
           </button>
 
-          {canActivate && (
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={onActivate}
-              disabled={activating}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              <span>{activating ? 'Opening…' : isActiveProfile ? 'Reopen' : 'Activate'}</span>
-            </button>
-          )}
+          {canActivate ? (
+            <div data-tour="activate" className="navbar-activate-slot">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={onActivate}
+                disabled={activating}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                <span>{activating ? 'Opening…' : isActiveProfile ? 'Reopen' : 'Activate'}</span>
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
     </header>
