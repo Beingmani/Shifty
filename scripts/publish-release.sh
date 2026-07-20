@@ -37,13 +37,17 @@ if gh release view "$TAG" --repo "$PUBLIC_REPO" &>/dev/null; then
 fi
 
 PRERELEASE_FLAG=""
-[[ "$VERSION" == *beta* || "$VERSION" == *alpha* || "$VERSION" == *rc* ]] && PRERELEASE_FLAG="--prerelease"
+LATEST_FLAG="--latest"
+[[ "$VERSION" == *beta* || "$VERSION" == *alpha* || "$VERSION" == *rc* ]] && {
+  PRERELEASE_FLAG="--prerelease"
+  LATEST_FLAG=""
+}
 
 gh release create "$TAG" \
   --repo "$PUBLIC_REPO" \
   --title "Shifty ${VERSION}" \
   --notes-file "$NOTES_FILE" \
-  --latest \
+  $LATEST_FLAG \
   $PRERELEASE_FLAG \
   "$DMG" \
   "$ZIP"
