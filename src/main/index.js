@@ -50,9 +50,11 @@ if (!app.requestSingleInstanceLock()) {
 
     windows.showSettings();
 
-    // Dock click / relaunch — open Settings and show Dock icon
+    // Dock click when Settings exists — don't open Settings for switcher hotkey activation
     app.on('activate', () => {
-      windows.showSettings();
+      if (windows.shouldOpenSettingsOnActivate()) {
+        windows.showSettings();
+      }
     });
   });
 

@@ -14,6 +14,31 @@ let toastWindowHideTimer = null;
 let toastGeneration = 0;
 let toastCallbacks = { onPrimary: null, onDismiss: null, onTimeout: null };
 
+/** macOS fires `app.activate` when a global shortcut wakes the app — skip opening Settings. */
+let suppressSettingsOnActivate = false;
+
+export function isSwitcherVisible() {
+  return Boolean(
+    switcherWindow && !switcherWindow.isDestroyed() && switcherWindow.isVisible()
+  );
+}
+
+export function hasSettingsWindow() {
+  return Boolean(settingsWindow && !settingsWindow.isDestroyed());
+}
+
+export function shouldOpenSettingsOnActivate() {
+  if (suppressSettingsOnActivate || isSwitcherVisible()) return false;
+  return hasSettingsWindow();
+}
+
+function markSwitcherActivation() {
+  suppressSettingsOnActivate = true;
+  queueMicrotask(() => {
+    suppressSettingsOnActivate = false;
+  });
+}
+
 function syncDockForSettings() {
   setDockVisible(settingsWindowNeedsDock(settingsWindow));
 }
@@ -124,6 +149,7 @@ export function toggleSwitcher() {
     hideSwitcher();
     return;
   }
+  markSwitcherActivation();
   const display = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
   const { x, y, width, height } = display.workArea;
   const [w, h] = switcherWindow.getSize();
