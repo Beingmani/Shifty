@@ -134,7 +134,7 @@ Shifty may request **Automation** access to quit apps when switching profiles (A
 
 ## Contributing
 
-Contributions are welcome — bug fixes, docs, and features. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+Contributions are welcome — bug fixes, docs, and features. See [CONTRIBUTING.md](./CONTRIBUTING.md) (includes **Conventional Commits** for commit messages).
 
 1. Fork the repo  
 2. Create a branch  

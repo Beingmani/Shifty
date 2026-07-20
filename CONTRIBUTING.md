@@ -34,6 +34,50 @@ npm run start:clean
 3. Test on macOS before opening a PR.
 4. Describe what changed and why in the PR body.
 
+## Commit messages
+
+We use [Conventional Commits](https://www.conventionalcommits.org/) so history stays scannable and releases stay predictable.
+
+**Format:**
+
+```
+<type>(<optional scope>): <short description>
+
+[optional body]
+
+[optional footer]
+```
+
+**Common types:**
+
+| Type | When to use |
+|------|-------------|
+| `feat` | New user-facing feature |
+| `fix` | Bug fix |
+| `docs` | README, comments, or docs only |
+| `style` | Formatting, CSS/UI polish (no logic change) |
+| `refactor` | Code change that is not a fix or feature |
+| `perf` | Performance improvement |
+| `test` | Tests only |
+| `chore` | Tooling, deps, build config |
+| `ci` | GitHub Actions / CI |
+
+**Examples:**
+
+```
+feat(switcher): add loading spinner while app icons fetch
+fix(menubar): remove double-layer shadow on popover
+docs: document Conventional Commits in CONTRIBUTING
+chore(deps): bump electron to 43.1.1
+```
+
+**Rules:**
+
+- Use the imperative mood: `add`, `fix`, `update` (not `added`, `fixes`).
+- Keep the subject line ≤ 72 characters.
+- One logical change per commit when possible.
+- Reference issues in the footer when relevant: `Closes #12`.
+
 ## Reporting bugs
 
 Open an [issue](https://github.com/Beingmani/Shifty/issues) with:
