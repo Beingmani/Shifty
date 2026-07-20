@@ -6,6 +6,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+---
+
+## [1.0.0-beta.1] — 2026-07-20
+
 ### Added
 - **In-app updates** — Check for updates from Settings → About; download from GitHub Releases
 - **What's new** — Release notes in Settings and a first-run modal after updating
@@ -26,3 +30,4 @@ Initial public release of Shifty — profile-based app switcher for macOS.
 - **Real app icons** — Extracted from `.app` bundles and cached locally
 
 [1.0.0]: https://github.com/Beingmani/Shifty/releases/tag/v1.0.0
+[1.0.0-beta.1]: https://github.com/Beingmani/Shifty/releases/tag/v1.0.0-beta.1
