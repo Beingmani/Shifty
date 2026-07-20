@@ -2,7 +2,7 @@
 
 /* ── Navbar (Stasho Navbar) ─────────────────────────────────────────── */
 .navbar {
-  padding: 12px var(--stage-inset-right) 10px var(--window-gutter);
+  padding: 16px 20px 10px var(--titlebar-left-pad, 20px);
   flex: 0 0 auto;
   position: relative;
   z-index: 2;
@@ -15,19 +15,21 @@
   align-items: center;
   gap: 12px;
   min-height: 52px;
-  padding: 6px 8px 6px calc(var(--titlebar-content-leading) + 14px);
+  padding: 6px 8px 6px 14px;
   border-radius: var(--chrome-radius);
   border: 1px solid var(--chrome-border);
   background: var(--chrome-bg);
   box-shadow: var(--chrome-shadow);
+  transition: box-shadow var(--dur-medium) var(--ease-out);
 }
 
 .navbar-brand-cluster {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
   flex-shrink: 0;
+  overflow: visible;
   -webkit-app-region: no-drag;
 }
 
@@ -51,7 +53,7 @@
   height: 28px;
   border-radius: 8px;
   object-fit: cover;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-icon-sm);
 }
 
 .brand-wordmark {
@@ -79,6 +81,180 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 160px;
+}
+
+.brand-profile-switch {
+  position: relative;
+  min-width: 0;
+}
+
+.brand-profile-trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: min(180px, 28vw);
+  padding: 4px 6px 4px 8px;
+  margin: -4px -6px -4px -8px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--control-radius) - 2px);
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+  cursor: pointer;
+  transition:
+    background var(--dur-instant) ease,
+    border-color var(--dur-instant) ease,
+    color var(--dur-instant) ease;
+}
+
+.brand-profile-trigger:hover,
+.brand-profile-trigger.is-open {
+  background: var(--chrome-fill-2);
+  border-color: var(--chrome-fill-3);
+  color: var(--chrome-text-secondary);
+}
+
+.brand-profile-trigger-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-profile-chevron {
+  flex-shrink: 0;
+  opacity: 0.72;
+  transition: transform var(--dur-instant) ease;
+}
+
+.brand-profile-trigger.is-open .brand-profile-chevron {
+  transform: rotate(180deg);
+}
+
+.brand-profile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 200;
+  width: min(240px, calc(100vw - 48px));
+  padding: 6px;
+  border-radius: var(--chrome-radius);
+  border: 1px solid var(--chrome-border);
+  background: var(--chrome-bg);
+  box-shadow: var(--chrome-shadow-scrolled);
+  animation: popIn var(--dur-quick) var(--ease-pop);
+}
+
+.brand-profile-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: min(280px, 50vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.brand-profile-option {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: calc(var(--control-radius) - 2px);
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--chrome-text);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-instant) ease;
+}
+
+.brand-profile-option:hover {
+  background: var(--chrome-fill-2);
+}
+
+.brand-profile-option.is-selected {
+  background: var(--selection-bg);
+  box-shadow: 0 0 0 1px var(--selection-ring) inset;
+}
+
+.brand-profile-option-emoji {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--chrome-fill-2);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.brand-profile-option.is-selected .brand-profile-option-emoji {
+  background: color-mix(in srgb, var(--brand-primary) 12%, var(--chrome-fill-2));
+}
+
+.brand-profile-option-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-profile-option-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-circle);
+  background: var(--status-success-dot);
+  box-shadow: 0 0 0 3px var(--status-success-halo);
+}
+
+.brand-profile-option-check {
+  flex-shrink: 0;
+  color: var(--brand-primary);
+}
+
+.brand-profile-menu-foot {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--chrome-border-subtle, var(--chrome-border));
+}
+
+.brand-profile-add {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  border: none;
+  border-radius: calc(var(--control-radius) - 2px);
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--chrome-text-muted);
+  cursor: pointer;
+  transition:
+    background var(--dur-instant) ease,
+    color var(--dur-instant) ease;
+}
+
+.brand-profile-add:hover {
+  background: var(--chrome-fill-2);
+  color: var(--chrome-text-secondary);
 }
 
 .navbar-search-trigger {
@@ -143,7 +319,7 @@
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  padding: 8px 10px 8px calc(var(--titlebar-content-leading) + 10px);
+  padding: 8px 10px;
   border-radius: var(--chrome-radius);
   border: 1px solid var(--chrome-border);
   background: var(--chrome-bg);
@@ -186,18 +362,87 @@
 }
 
 .profile-chip-active {
-  background: var(--accent-bg-soft);
-  border-color: color-mix(in srgb, var(--brand-primary) 35%, transparent);
-  color: var(--chrome-text);
+  background: var(--selection-compact-bg);
+  border-color: transparent;
+  color: var(--selection-compact-fg);
+}
+
+.profile-chip-active:hover {
+  background: var(--selection-compact-bg-hover);
+  color: var(--selection-compact-fg);
 }
 
 .profile-chip-live .profile-chip-name {
   font-weight: 650;
 }
 
-.profile-chip-emoji {
-  font-size: 15px;
-  line-height: 1;
+/* Criss-cross app icon pile — first 3 apps per profile */
+.profile-chip-stack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 20px;
+  isolation: isolate;
+}
+
+.profile-chip-stack-icon,
+.profile-chip-stack-more {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-left: -8px;
+  border-radius: 5px;
+  overflow: hidden;
+  transform-origin: 50% 55%;
+}
+
+.profile-chip-stack-icon:first-child,
+.profile-chip-stack-more:first-child {
+  margin-left: 0;
+}
+
+.profile-chip-stack-icon .app-icon-img,
+.profile-chip-stack-icon .app-icon-fallback,
+.profile-chip-stack-icon .app-icon-loading {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center;
+}
+
+.profile-chip-stack-icon .app-icon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--chrome-fill-3);
+  color: var(--chrome-text-muted);
+}
+
+.profile-chip-stack-icon .app-icon-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--chrome-fill-2);
+  color: var(--chrome-text-muted);
+}
+
+.profile-chip-stack-icon--placeholder {
+  background: var(--chrome-fill-3);
+  border: 1px solid var(--chrome-fill-4);
+}
+
+.profile-chip-active .profile-chip-stack-icon--placeholder {
+  background: color-mix(in srgb, var(--selection-compact-fg) 16%, transparent);
+  border-color: color-mix(in srgb, var(--selection-compact-fg) 26%, transparent);
 }
 
 .profile-chip-name {
@@ -211,9 +456,14 @@
   width: 7px;
   height: 7px;
   border-radius: var(--radius-circle);
-  background: var(--status-success-dot);
-  box-shadow: 0 0 0 3px var(--status-success-halo);
+  background: var(--live-dot);
+  box-shadow: 0 0 0 3px var(--live-dot-halo);
   flex-shrink: 0;
+}
+
+.profile-chip-active .profile-chip-dot {
+  background: var(--live-dot-on-selection);
+  box-shadow: 0 0 0 3px var(--live-dot-halo-on-selection);
 }
 
 .profile-chip-add {
@@ -262,14 +512,99 @@
   width: 40px;
   height: 40px;
   flex-shrink: 0;
-  text-align: center;
-  font-size: 20px;
-  line-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   border: 1px solid var(--chrome-fill-3);
   border-radius: 11px;
   background: var(--chrome-fill-1);
   box-shadow: var(--shadow-control);
-  cursor: text;
+  cursor: pointer;
+  font: inherit;
+  color: var(--chrome-text-muted);
+  transition:
+    background var(--dur-instant) ease,
+    border-color var(--dur-instant) ease,
+    color var(--dur-instant) ease;
+}
+
+.profile-hero-emoji:hover {
+  background: var(--chrome-fill-2);
+  border-color: var(--chrome-border-strong);
+  color: var(--chrome-text-secondary);
+}
+
+.profile-hero-emoji:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 2px;
+}
+
+.emoji-picker-value {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.emoji-picker-placeholder {
+  opacity: 0.72;
+}
+
+.emoji-picker-popover {
+  position: fixed;
+  z-index: 100010;
+  width: 288px;
+  max-height: 220px;
+  padding: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--chrome-border);
+  background: var(--chrome-bg);
+  box-shadow: var(--chrome-shadow-scrolled);
+  animation: timeFieldPopIn var(--dur-quick) var(--ease-out) both;
+  -webkit-app-region: no-drag;
+  pointer-events: auto;
+}
+
+.emoji-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  max-height: 204px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px;
+}
+
+.emoji-picker-option {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--dur-instant) ease,
+    border-color var(--dur-instant) ease,
+    transform var(--dur-instant) ease;
+}
+
+.emoji-picker-option:hover {
+  background: var(--chrome-fill-2);
+}
+
+.emoji-picker-option.is-selected {
+  background: var(--selection-bg);
+  border-color: var(--selection-border);
+}
+
+.emoji-picker-option:active {
+  transform: scale(0.94);
 }
 
 .profile-hero-name {
@@ -316,9 +651,9 @@
 }
 
 .profile-stat-pill-active {
-  background: var(--accent-bg-faint);
-  border-color: color-mix(in srgb, var(--brand-primary) 30%, transparent);
-  color: var(--chrome-text-secondary);
+  background: var(--selection-bg);
+  border-color: var(--selection-border);
+  color: var(--chrome-text);
 }
 
 .profile-editor-footer {
@@ -473,7 +808,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: color-mix(in srgb, var(--surface-1, #000) 72%, transparent);
+  background: var(--overlay-scrim);
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
   -webkit-app-region: no-drag;
@@ -781,10 +1116,7 @@
   background: color-mix(in srgb, var(--chrome-bg) 58%, transparent);
   backdrop-filter: blur(28px) saturate(1.55);
   -webkit-backdrop-filter: blur(28px) saturate(1.55);
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--chrome-inset) 40%, transparent) inset,
-    0 14px 44px rgba(0, 0, 0, 0.24),
-    0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-dock);
   overflow: visible;
 }
 
@@ -839,7 +1171,7 @@
   border-radius: 999px;
   background: color-mix(in srgb, var(--chrome-bg) 94%, transparent);
   color: var(--chrome-text-muted);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-icon-md);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
@@ -877,10 +1209,7 @@
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 22%;
-  /* Soft contact shadow so icons “sit” on the shelf */
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.12),
-    0 6px 14px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow-dock-icon);
   pointer-events: none;
   /* Uniform square icons — size comes from motion width (base = 48) */
   aspect-ratio: 1;
@@ -955,7 +1284,7 @@
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   box-shadow:
     0 1px 0 color-mix(in srgb, var(--chrome-inset) 50%, transparent) inset,
-    0 6px 20px rgba(0, 0, 0, 0.22);
+    var(--shadow-icon-lg);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -1287,7 +1616,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: color-mix(in srgb, var(--surface-1, #000) 72%, transparent);
+  background: var(--overlay-scrim);
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
   animation: settingsVeilIn var(--dur-quick) var(--ease-out) both;
@@ -1460,7 +1789,7 @@
   border-radius: 999px;
   background: var(--brand-primary);
   color: var(--brand-on-primary);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow-icon-md);
 }
 
 .app-add-tile-name {
@@ -1554,7 +1883,7 @@
   background: var(--chrome-fill-2);
   font: inherit;
   font-size: 12px;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--chrome-text-muted);
   cursor: pointer;
@@ -1570,14 +1899,15 @@
 }
 
 .sched-quick-btn.is-on {
-  background: var(--accent-bg-faint, color-mix(in srgb, var(--brand-primary) 14%, transparent));
-  color: var(--chrome-text);
-  font-weight: 700;
+  background: var(--selection-muted-bg);
+  color: var(--selection-muted-fg-active);
+  box-shadow: 0 0 0 1px var(--selection-muted-border) inset;
+  font-weight: 600;
 }
 
 .sched-quick-btn.is-on:hover {
-  background: var(--accent-bg-faint, color-mix(in srgb, var(--brand-primary) 18%, transparent));
-  color: var(--chrome-text);
+  background: var(--selection-muted-bg);
+  color: var(--selection-muted-fg-active);
 }
 
 .sched-quick-btn:focus-visible {
@@ -1611,14 +1941,13 @@
   background: transparent;
   font: inherit;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--chrome-text-muted);
   cursor: pointer;
   transition:
     background var(--dur-instant) ease,
-    color var(--dur-instant) ease,
-    box-shadow var(--dur-instant) ease;
+    color var(--dur-instant) ease;
 }
 
 .sched-day:hover {
@@ -1627,9 +1956,9 @@
 }
 
 .sched-day.is-on {
-  background: var(--brand-primary);
-  color: var(--brand-on-primary);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--brand-primary) 35%, transparent);
+  background: var(--selection-muted-bg);
+  color: var(--selection-muted-fg-active);
+  box-shadow: 0 0 0 1px var(--selection-muted-border) inset;
 }
 
 .sched-day:focus-visible {
@@ -1696,7 +2025,7 @@
 
 .time-field-label {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 650;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--chrome-text-faint);
@@ -1736,7 +2065,7 @@
 
 .time-field-value {
   font-size: 14px;
-  font-weight: 650;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
   white-space: nowrap;
@@ -1841,9 +2170,8 @@
 }
 
 .time-field-opt.is-on {
-  background: var(--brand-primary);
-  color: var(--brand-on-primary);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--brand-primary) 30%, transparent);
+  background: var(--selection-compact-bg);
+  color: var(--selection-compact-fg);
 }
 
 .time-field-popover-foot {
@@ -1893,34 +2221,30 @@
 }
 
 .sched-time-preset.is-on {
-  background: var(--accent-bg-faint, color-mix(in srgb, var(--brand-primary) 14%, transparent));
-  color: var(--chrome-text);
-}
-
-.sched-time-preset-custom {
-  cursor: default;
-  pointer-events: none;
+  background: var(--selection-muted-bg);
+  box-shadow: 0 0 0 1px var(--selection-muted-border) inset;
+  color: var(--selection-muted-fg-active);
 }
 
 .sched-time-preset-custom:not(.is-on) {
-  opacity: 0.55;
+  opacity: 0.72;
 }
 
 .sched-time-preset-label {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: inherit;
 }
 
 .sched-time-preset-hint {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--chrome-text-faint);
 }
 
 .sched-time-preset.is-on .sched-time-preset-hint {
-  color: color-mix(in srgb, var(--brand-primary) 75%, var(--chrome-text-muted));
+  color: var(--chrome-text-muted);
 }
 
 .sched-time-preset:focus-visible {
@@ -1954,7 +2278,7 @@
 .sched-activate-title {
   margin: 0;
   font-size: 13px;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--chrome-text);
   line-height: 1.3;
@@ -1978,7 +2302,7 @@
 
 .sched-activate-state {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--chrome-text-faint);
   min-width: 3.25em;
@@ -2492,10 +2816,10 @@
 }
 
 .segment-option.active {
-  background: var(--chrome-bg);
-  border-color: var(--chrome-fill-3);
+  background: var(--selection-bg);
+  border-color: var(--selection-border);
   color: var(--chrome-text);
-  box-shadow: var(--shadow-control);
+  box-shadow: none;
 }
 
 /* ── App picker ──────────────────────────────────────────────────────── */
@@ -2724,7 +3048,7 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: color-mix(in srgb, var(--surface-1) 72%, transparent);
+  background: var(--overlay-scrim);
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
   animation: settingsVeilIn var(--dur-quick) var(--ease-out) both;
@@ -2854,10 +3178,10 @@
 }
 
 .settings-nav-item-active {
-  background: var(--chrome-fill-4);
-  border-color: var(--chrome-fill-3);
+  background: var(--selection-bg);
+  border-color: var(--selection-border);
   color: var(--chrome-text);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--chrome-inset) 35%, transparent) inset;
+  box-shadow: none;
 }
 
 .settings-nav-icon {

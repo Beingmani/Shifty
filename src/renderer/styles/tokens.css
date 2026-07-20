@@ -7,11 +7,8 @@
  */
 
 :root {
-  /* ── Brand primitives (theme-independent) ─────────────────────────── */
-  --brand-primary: #008e79;
-  --brand-primary-hover: #00b16a;
-  --brand-secondary: #3de8a8;
-  --brand-on-primary: #ffffff;
+  /* ── Brand primitives — cool slate/steel, matched to the app icon ─── */
+  --brand-secondary: #64748b;
 
   --control-height: 34px;
   --control-radius: 10px;
@@ -19,16 +16,9 @@
   --pill-radius: 999px;
 
   --grid-gutter: 20px;
-  --window-gutter: 16px;
-  /* Reserve space inside chrome rows for macOS traffic lights (hiddenInset). */
-  --titlebar-content-leading: 58px;
-  --stage-inset-left: var(--window-gutter);
-  --stage-inset-right: 20px;
   --toolbar-float-height: 78px;
-  --profile-bar-gap: 8px;
-  --profile-bar-height: 52px;
 
-  /* ── CTA (brand-derived, same hues in both themes) ───────────────── */
+  /* ── CTA (brand-derived, theme-aware in chrome blocks below) ─────── */
   --cta-bg: var(--brand-primary);
   --cta-bg-hover: var(--brand-primary-hover);
   --cta-fg: var(--brand-on-primary);
@@ -38,43 +28,82 @@
   --destructive-fg: #ffffff;
 }
 
-/* ── Light theme chrome ─────────────────────────────────────────────── */
+/* ── Light theme chrome — cool slate, mirrors dark structure ────────── */
 :root,
 :root[data-theme="light"] {
-  --chrome-bg: #ffffff;
-  --chrome-border: rgba(0, 0, 0, 0.08);
-  --chrome-border-strong: rgba(0, 0, 0, 0.12);
-  --chrome-inset: rgba(255, 255, 255, 0.85);
+  --brand-primary: #3d4654;
+  --brand-primary-hover: #2f3642;
+  --brand-on-primary: #ffffff;
+
+  --chrome-bg: #f8f9fb;
+  --chrome-border: rgba(20, 24, 32, 0.09);
+  --chrome-border-strong: rgba(20, 24, 32, 0.13);
+  --chrome-inset: rgba(255, 255, 255, 0.92);
   --chrome-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
-    0 10px 30px rgba(0, 0, 0, 0.08);
+    0 0 0 1px var(--chrome-inset) inset,
+    0 10px 30px rgba(20, 24, 32, 0.10);
   --chrome-shadow-scrolled:
-    0 0 0 1px rgba(0, 0, 0, 0.06) inset,
-    0 14px 36px rgba(0, 0, 0, 0.12);
+    0 0 0 1px var(--chrome-inset) inset,
+    0 14px 36px rgba(20, 24, 32, 0.14);
 
-  --chrome-text: rgba(0, 0, 0, 0.92);
-  --chrome-text-secondary: rgba(0, 0, 0, 0.72);
-  --chrome-text-muted: rgba(0, 0, 0, 0.50);
-  --chrome-text-faint: rgba(0, 0, 0, 0.35);
-  --chrome-separator: rgba(0, 0, 0, 0.20);
+  --chrome-text: rgba(20, 24, 32, 0.94);
+  --chrome-text-secondary: rgba(20, 24, 32, 0.74);
+  --chrome-text-muted: rgba(20, 24, 32, 0.52);
+  --chrome-text-faint: rgba(20, 24, 32, 0.36);
+  --chrome-separator: rgba(20, 24, 32, 0.18);
 
-  --chrome-fill-1: rgba(0, 0, 0, 0.03);
-  --chrome-fill-2: rgba(0, 0, 0, 0.04);
-  --chrome-fill-3: rgba(0, 0, 0, 0.06);
-  --chrome-fill-4: rgba(0, 0, 0, 0.08);
-  --chrome-fill-5: rgba(0, 0, 0, 0.10);
+  --chrome-fill-1: rgba(20, 24, 32, 0.04);
+  --chrome-fill-2: rgba(20, 24, 32, 0.05);
+  --chrome-fill-3: rgba(20, 24, 32, 0.07);
+  --chrome-fill-4: rgba(20, 24, 32, 0.09);
+  --chrome-fill-5: rgba(20, 24, 32, 0.11);
 
-  --chrome-hover: rgba(120, 120, 128, 0.10);
-  --chrome-border-subtle: rgba(0, 0, 0, 0.05);
+  --chrome-hover: rgba(100, 116, 139, 0.12);
+  --chrome-border-subtle: rgba(20, 24, 32, 0.06);
 
-  --cta-border: rgba(0, 0, 0, 0.06);
+  --cta-border: rgba(20, 24, 32, 0.08);
 
-  --scrollbar-thumb: color-mix(in srgb, var(--chrome-text) 20%, transparent);
-  --scrollbar-thumb-hover: color-mix(in srgb, var(--chrome-text) 32%, transparent);
+  --overlay-scrim: rgba(20, 24, 32, 0.40);
+
+  --shadow-icon-sm: 0 1px 2px rgba(20, 24, 32, 0.10);
+  --shadow-icon-md: 0 2px 8px rgba(20, 24, 32, 0.12);
+  --shadow-icon-lg: 0 6px 14px rgba(20, 24, 32, 0.14);
+  --shadow-dock: none;
+  --shadow-dock-icon: none;
+
+  --stack-more-bg: var(--chrome-bg);
+  --stack-more-fg: var(--chrome-text);
+  --stack-more-border: var(--chrome-border-strong);
+  --stack-more-shadow: 0 1px 4px rgba(20, 24, 32, 0.14);
+
+  /* Selection — solid pills + surface tints mixed against chrome-bg */
+  --selection-compact-bg: var(--brand-primary);
+  --selection-compact-fg: var(--brand-on-primary);
+  --selection-compact-bg-hover: var(--brand-primary-hover);
+  --selection-bg: color-mix(in srgb, var(--brand-primary) 10%, var(--chrome-bg));
+  --selection-border: color-mix(in srgb, var(--brand-primary) 22%, var(--chrome-border));
+  --selection-ring: color-mix(in srgb, var(--brand-primary) 14%, transparent);
+  --selection-muted-bg: color-mix(in srgb, var(--brand-primary) 9%, var(--chrome-fill-2));
+  --selection-muted-fg: var(--chrome-text-secondary);
+  --selection-muted-fg-active: var(--chrome-text);
+  --selection-muted-border: color-mix(in srgb, var(--brand-primary) 12%, transparent);
+
+  /* Live indicator — sage greens, flips contrast on selected pills */
+  --live-dot: #2f8f62;
+  --live-dot-halo: color-mix(in srgb, #2f8f62 22%, transparent);
+  --live-dot-on-selection: #9ae8c0;
+  --live-dot-halo-on-selection: color-mix(in srgb, #9ae8c0 32%, transparent);
+
+  --scrollbar-thumb: color-mix(in srgb, var(--chrome-text) 22%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--chrome-text) 34%, transparent);
 }
 
 /* ── Dark theme chrome ──────────────────────────────────────────────── */
 :root[data-theme="dark"] {
+  --brand-primary: #b4bcc8;
+  --brand-primary-hover: #d0d6df;
+  --brand-on-primary: #141820;
+
   --chrome-bg: #111114;
   --chrome-border: rgba(255, 255, 255, 0.08);
   --chrome-border-strong: rgba(255, 255, 255, 0.12);
@@ -102,6 +131,38 @@
   --chrome-border-subtle: rgba(255, 255, 255, 0.05);
 
   --cta-border: rgba(255, 255, 255, 0.10);
+
+  --overlay-scrim: rgba(0, 0, 0, 0.52);
+
+  --shadow-icon-sm: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-icon-md: 0 2px 8px rgba(0, 0, 0, 0.22);
+  --shadow-icon-lg: 0 6px 14px rgba(0, 0, 0, 0.24);
+  --shadow-dock:
+    0 0 0 1px color-mix(in srgb, var(--chrome-inset) 40%, transparent) inset,
+    0 14px 44px rgba(0, 0, 0, 0.24),
+    0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-dock-icon: var(--shadow-icon-sm), var(--shadow-icon-lg);
+
+  --stack-more-bg: #1c1c20;
+  --stack-more-fg: var(--chrome-text);
+  --stack-more-border: var(--chrome-border-strong);
+  --stack-more-shadow: 0 1px 5px rgba(0, 0, 0, 0.42);
+
+  --selection-compact-bg: var(--brand-primary);
+  --selection-compact-fg: var(--brand-on-primary);
+  --selection-compact-bg-hover: var(--brand-primary-hover);
+  --selection-bg: color-mix(in srgb, var(--brand-primary) 18%, var(--chrome-bg));
+  --selection-border: color-mix(in srgb, var(--brand-primary) 30%, var(--chrome-border));
+  --selection-ring: color-mix(in srgb, var(--brand-primary) 22%, transparent);
+  --selection-muted-bg: color-mix(in srgb, var(--brand-primary) 14%, var(--chrome-fill-2));
+  --selection-muted-fg: var(--chrome-text-muted);
+  --selection-muted-fg-active: var(--chrome-text);
+  --selection-muted-border: color-mix(in srgb, var(--brand-primary) 18%, transparent);
+
+  --live-dot: #6ecf9a;
+  --live-dot-halo: color-mix(in srgb, #6ecf9a 24%, transparent);
+  --live-dot-on-selection: #1a7a4e;
+  --live-dot-halo-on-selection: color-mix(in srgb, #1a7a4e 26%, transparent);
 
   --scrollbar-thumb: color-mix(in srgb, var(--chrome-text) 24%, transparent);
   --scrollbar-thumb-hover: color-mix(in srgb, var(--chrome-text) 38%, transparent);

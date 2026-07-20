@@ -41,13 +41,15 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <div className="layout">
+      <div className="layout sidebar-collapsed">
         <div className="main-col">
           <div className="library-stage">
             <div className="toolbar-shell">
               <div className="toolbar-shell-inner">
                 <Navbar
-                  profileName={selected?.name}
+                  profiles={snapshot.profiles}
+                  selectedId={selectedId}
+                  activeProfileId={snapshot.activeProfileId}
                   hotkey={snapshot.settings.hotkey}
                   canActivate={!!selected}
                   activating={activating}
@@ -55,12 +57,14 @@ export default function App() {
                   onOpenSettings={() => setSettingsOpen(true)}
                   onActivate={activateSelected}
                   onGoHome={() => setSelectedId(snapshot.profiles[0]?.id ?? null)}
+                  onSelectProfile={setSelectedId}
+                  onAddProfile={openTemplatePicker}
                 />
               </div>
             </div>
 
-            <div className="profile-bar-shell">
-              <div className="profile-bar-shell-inner">
+            <div className="content-scroll chromeScroll">
+              <div className="profile-bar-scroll">
                 <ProfileBar
                   profiles={snapshot.profiles}
                   activeProfileId={snapshot.activeProfileId}
@@ -69,9 +73,6 @@ export default function App() {
                   onAdd={openTemplatePicker}
                 />
               </div>
-            </div>
-
-            <div className="content-scroll chromeScroll">
               <div className="content-scroll-inner">
                 {selected ? (
                   <ProfileEditor key={selected.id} profile={selected} />

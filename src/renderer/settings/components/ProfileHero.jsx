@@ -1,4 +1,5 @@
 import React from 'react';
+import EmojiPicker from './EmojiPicker.jsx';
 
 function StatPills({ appCount, scheduleSummary, scheduleEnabled }) {
   return (
@@ -26,12 +27,10 @@ export default function ProfileHero({
     <header className="profile-hero">
       <div className="profile-hero-inline">
         <div className="profile-hero-inline-main">
-          <input
+          <EmojiPicker
             className="profile-hero-emoji"
             value={profile.emoji ?? ''}
-            maxLength={4}
-            onChange={(e) => onPatch({ emoji: e.target.value })}
-            title="Profile emoji"
+            onChange={(emoji) => onPatch({ emoji })}
             aria-label="Profile emoji"
           />
           <input

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Settings, Shuffle, Power } from 'lucide-react';
+import { Settings, AppWindow, Power } from 'lucide-react';
 import { useStore } from '../shared/useStore.js';
 import { applyResolvedTheme } from '../shared/theme.js';
 import AppIcon from '../settings/components/AppIcon.jsx';
@@ -92,13 +92,8 @@ export default function Menubar() {
     }
   }
 
-  function openSettings() {
+  function openShifty() {
     window.shifty.openSettings();
-    window.shifty.hideMenubar?.();
-  }
-
-  function openSwitcher() {
-    window.shifty.openSwitcher?.();
     window.shifty.hideMenubar?.();
   }
 
@@ -126,7 +121,7 @@ export default function Menubar() {
         {profiles.length === 0 ? (
           <div className="mb-empty">
             <p className="mb-empty-text">No profiles yet</p>
-            <button type="button" className="mb-link" onClick={openSettings}>
+            <button type="button" className="mb-link" onClick={openShifty}>
               Open Settings to create one
             </button>
           </div>
@@ -169,13 +164,13 @@ export default function Menubar() {
       </div>
 
       <footer className="mb-footer">
-        <button type="button" className="mb-footer-btn" onClick={openSwitcher} title="Quick switcher">
-          <Shuffle size={13} strokeWidth={2.25} aria-hidden="true" />
-          Switcher
+        <button type="button" className="mb-footer-btn" onClick={openShifty} title="Open Shifty">
+          <AppWindow size={13} strokeWidth={2.25} aria-hidden="true" />
+          <span className="mb-footer-label">Open</span>
         </button>
-        <button type="button" className="mb-footer-btn" onClick={openSettings} title="Settings">
+        <button type="button" className="mb-footer-btn" onClick={openShifty} title="Settings">
           <Settings size={13} strokeWidth={2.25} aria-hidden="true" />
-          Settings
+          <span className="mb-footer-label">Settings</span>
         </button>
         <button
           type="button"
@@ -184,7 +179,7 @@ export default function Menubar() {
           title="Quit Shifty"
         >
           <Power size={13} strokeWidth={2.25} aria-hidden="true" />
-          Quit
+          <span className="mb-footer-label">Quit</span>
         </button>
       </footer>
     </div>

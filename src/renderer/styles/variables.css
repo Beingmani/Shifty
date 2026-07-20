@@ -5,80 +5,79 @@
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Surfaces */
-  --sidebar-bg: rgba(255, 255, 255, 0.82);
-  --content-bg: #EFEFED;
-  --titlebar-bg: #FFFFFF;
-  --surface-1: #FFFFFF;
+  /* Surfaces — cool slate stage with bright floating chrome */
+  --sidebar-bg: rgba(248, 249, 251, 0.88);
+  --content-bg: #e4e8ee;
+  --titlebar-bg: #f6f7f9;
+  --surface-1: #ffffff;
 
-  /* Borders */
-  --border: rgba(0, 0, 0, 0.07);
-  --border-strong: rgba(0, 0, 0, 0.12);
-  --border-subtle: rgba(0, 0, 0, 0.05);
-  --border-hairline: rgba(0, 0, 0, 0.06);
+  /* Borders — slate-tinted, not pure black */
+  --border: rgba(20, 24, 32, 0.08);
+  --border-strong: rgba(20, 24, 32, 0.12);
+  --border-subtle: rgba(20, 24, 32, 0.05);
+  --border-hairline: rgba(20, 24, 32, 0.06);
 
-  /* Text */
-  --text-primary: #000000;
-  --text-secondary: rgba(0, 0, 0, 0.55);
-  --text-tertiary: rgba(0, 0, 0, 0.4);
+  /* Text — shared ink base with dark mode brand-on-primary */
+  --text-primary: #141820;
+  --text-secondary: rgba(20, 24, 32, 0.58);
+  --text-tertiary: rgba(20, 24, 32, 0.42);
   --text-on-accent: var(--brand-on-primary);
 
   /* Accent — derived from --brand-primary in tokens.css */
   --accent: var(--brand-primary);
   --accent-hover: var(--brand-primary-hover);
-  --accent-bg-faint: color-mix(in srgb, var(--brand-primary) 12%, transparent);
-  --accent-bg-soft: color-mix(in srgb, var(--brand-primary) 18%, transparent);
-  --accent-bg-active: color-mix(in srgb, var(--brand-primary) 22%, transparent);
-  --accent-bg-medium: color-mix(in srgb, var(--brand-primary) 14%, transparent);
-  --accent-ring: color-mix(in srgb, var(--brand-primary) 40%, transparent);
+  --accent-bg-faint: color-mix(in srgb, var(--brand-primary) 14%, transparent);
+  --accent-bg-soft: color-mix(in srgb, var(--brand-primary) 20%, transparent);
+  --accent-bg-active: color-mix(in srgb, var(--brand-primary) 26%, transparent);
+  --accent-bg-medium: color-mix(in srgb, var(--brand-primary) 16%, transparent);
+  --accent-ring: color-mix(in srgb, var(--brand-primary) 44%, transparent);
 
-  /* Hover/active states — --hover-bg pinned to a literal so it renders
-     identically across components. */
-  --hover-bg: #EAEAEA;
-  --hover-bg-soft: rgba(0, 0, 0, 0.04);
-  --hover-bg-strong: rgba(0, 0, 0, 0.08);
-  --active-bg: rgba(0, 0, 0, 0.08);
+  /* Hover/active — cool gray overlays matching the slate palette */
+  --hover-bg: #d8dde5;
+  --hover-bg-soft: rgba(20, 24, 32, 0.04);
+  --hover-bg-strong: rgba(20, 24, 32, 0.08);
+  --active-bg: rgba(20, 24, 32, 0.09);
 
-  /* Apple-style soft button (gradient + inset highlight) */
-  --btn-from: #F6F6F3;
-  --btn-to: #F1F1EE;
-  --btn-border: rgba(0, 0, 0, 0.05);
-  --btn-inset: #FFF;
+  /* Soft button surfaces — cool gradient, not warm cream */
+  --btn-from: #f4f5f7;
+  --btn-to: #eceef2;
+  --btn-border: rgba(20, 24, 32, 0.07);
+  --btn-inset: #fafbfc;
 
   /* Inputs */
-  --input-bg: rgba(0, 0, 0, 0.025);
+  --input-bg: rgba(20, 24, 32, 0.04);
   --input-bg-focus: #ffffff;
-  --input-border: rgba(0, 0, 0, 0.10);
+  --input-border: rgba(20, 24, 32, 0.10);
 
-  --inset-highlight: #FFF;
+  --inset-highlight: rgba(255, 255, 255, 0.95);
 
-  /* Composite shadows */
+  /* Composite shadows — slate-tinted depth matching dark structure */
   --shadow-control:
-    0 1px 3px -1px rgba(16, 16, 19, 0.05);
+    0 1px 3px -1px rgba(20, 24, 32, 0.08);
   --shadow-card:
-    0 0 0 1px rgba(0, 0, 0, 0.06) inset,
-    0 2px 6px 0 rgba(0, 0, 0, 0.06),
-    0 8px 24px 0 rgba(0, 0, 0, 0.05);
+    0 0 0 1px var(--inset-highlight) inset,
+    0 2px 6px 0 rgba(20, 24, 32, 0.06),
+    0 8px 24px 0 rgba(20, 24, 32, 0.08);
   --shadow-modal:
-    0 4px 14px rgba(0, 0, 0, 0.08),
-    0 24px 60px rgba(0, 0, 0, 0.18),
+    0 4px 14px rgba(20, 24, 32, 0.10),
+    0 24px 60px rgba(20, 24, 32, 0.16),
     inset 0 1px 0 var(--inset-highlight);
 
-  /* Status */
-  --status-success: #138636;
-  --status-success-dot: #34c759;
-  --status-success-halo: rgba(52, 199, 89, 0.18);
+  /* Status — muted sage, not neon system green */
+  --status-success: #2f8f62;
+  --status-success-dot: #3d9970;
+  --status-success-halo: color-mix(in srgb, #3d9970 20%, transparent);
   --status-error: #c1322a;
 
   /* Tooltip pill */
-  --tooltip-bg: rgba(28, 28, 30, 0.94);
+  --tooltip-bg: rgba(20, 24, 32, 0.94);
   --tooltip-fg: #fff;
 
-  --icon-muted: #c7c7c7;
+  --icon-muted: #9aa3b0;
 
   /* Active-row chrome (selected sidebar entry) */
-  --active-row-bg: #E8E8E8;
-  --active-row-fg: #000;
+  --active-row-bg: #d8dde5;
+  --active-row-fg: #141820;
 
   --titlebar-height: 44px;
 
@@ -168,9 +167,9 @@
     0 24px 60px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 var(--inset-highlight);
 
-  --status-success: #30d158;
-  --status-success-dot: #30d158;
-  --status-success-halo: rgba(48, 209, 88, 0.22);
+  --status-success: #6ecf9a;
+  --status-success-dot: #6ecf9a;
+  --status-success-halo: color-mix(in srgb, #6ecf9a 22%, transparent);
   --status-error: #ff6961;
 
   --tooltip-bg: rgba(50, 50, 52, 0.96);

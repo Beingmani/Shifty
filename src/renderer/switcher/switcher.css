@@ -122,9 +122,9 @@ body,
 }
 
 .switcher-item.is-selected {
-  background: var(--accent-bg-faint, color-mix(in srgb, var(--brand-primary) 12%, transparent));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-primary) 22%, transparent) inset;
-  --stack-separator: var(--accent-bg-faint, color-mix(in srgb, var(--brand-primary) 12%, transparent));
+  background: var(--selection-bg);
+  box-shadow: 0 0 0 1px var(--selection-ring) inset;
+  --stack-separator: var(--selection-bg);
 }
 
 .switcher-emoji {
@@ -216,7 +216,7 @@ body,
   overflow: hidden;
   background: transparent;
   /* Soft depth only — no outline ring */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow-icon-md);
   transform-origin: 50% 55%;
   will-change: transform;
 }
@@ -275,17 +275,13 @@ body,
   }
 }
 
-.switcher-stack-more {
-  background: var(--chrome-fill-3);
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: -0.02em;
-  color: var(--chrome-text-muted);
-}
-
 .switcher-item.is-selected .switcher-stack-icon,
 .switcher-item.is-selected .switcher-stack-more {
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+  box-shadow: var(--shadow-icon-lg);
+}
+
+.switcher-item.is-selected .switcher-stack-more {
+  border-color: var(--selection-border) !important;
 }
 
 /* ── Empty ───────────────────────────────────────────────────────────── */

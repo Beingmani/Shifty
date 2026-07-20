@@ -95,6 +95,12 @@ input:focus-visible {
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
+  --titlebar-left-pad: 16px;
+}
+
+/* No sidebar — content clears macOS stoplights (same as Stasho sidebar-collapsed). */
+.layout.sidebar-collapsed {
+  --titlebar-left-pad: 104px;
 }
 
 .main-col {
@@ -116,21 +122,13 @@ input:focus-visible {
 
 .toolbar-shell-inner {
   pointer-events: auto;
+  padding-right: 20px;
 }
 
-.profile-bar-shell {
-  position: absolute;
-  top: calc(var(--toolbar-float-height) + var(--profile-bar-gap));
-  left: 0;
-  right: 0;
-  z-index: 49;
-  pointer-events: none;
-  padding-left: var(--stage-inset-left);
-  padding-right: var(--stage-inset-right);
-}
-
-.profile-bar-shell-inner {
-  pointer-events: auto;
+.profile-bar-scroll {
+  flex: 0 0 auto;
+  margin-bottom: 12px;
+  -webkit-app-region: no-drag;
 }
 
 .library-stage {
@@ -146,12 +144,10 @@ input:focus-visible {
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding-top: calc(
-    var(--toolbar-float-height) + var(--profile-bar-gap) + var(--profile-bar-height) + 12px
-  );
+  padding-top: calc(var(--toolbar-float-height) + 12px);
   padding-bottom: 24px;
-  padding-left: var(--stage-inset-left);
-  padding-right: var(--stage-inset-right);
+  padding-left: var(--grid-gutter);
+  padding-right: var(--grid-gutter);
 }
 
 .content-scroll--general {
@@ -162,6 +158,20 @@ input:focus-visible {
   width: 100%;
   max-width: none;
   margin: 0;
+}
+
+/* +N overflow badge on criss-cross app stacks (switcher + menubar) */
+.switcher-stack-more,
+.mb-stack-more {
+  z-index: 24;
+  background: var(--stack-more-bg) !important;
+  border: 1.5px solid var(--stack-more-border) !important;
+  box-shadow: var(--stack-more-shadow) !important;
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  color: var(--stack-more-fg);
 }
 
 /* Theme-switch shimmer — soft blurred ribbon sweeps on flip (Stasho). */
@@ -175,12 +185,12 @@ input:focus-visible {
   z-index: 2147483646;
   translate: -120% 0;
   will-change: translate, scale, rotate;
-  --c1: #3de8a8;
-  --c2: #00b16a;
-  --c3: #008e79;
-  --c4: #006b5c;
-  --c5: #2bcfe0;
-  --c6: #7ad6b8;
+  --c1: #e2e8f0;
+  --c2: #cbd5e1;
+  --c3: #94a3b8;
+  --c4: #64748b;
+  --c5: #475569;
+  --c6: #334155;
   --b1x: 10%; --b1y: 30%;
   --b2x: 26%; --b2y: 76%;
   --b3x: 42%; --b3y: 38%;
@@ -197,12 +207,12 @@ input:focus-visible {
   filter: blur(70px) saturate(1.25);
 }
 
-.glimm-band--stasho { --c1:#3de8a8; --c2:#00b16a; --c3:#008e79; --c4:#006b5c; --c5:#2bcfe0; --c6:#7ad6b8; }
-.glimm-band--mint   { --c1:#c6f5e0; --c2:#8fe8c4; --c3:#3de8a8; --c4:#00b16a; --c5:#5ae0c8; --c6:#a8f0d0; }
-.glimm-band--lagoon { --c1:#008e79; --c2:#00b6a8; --c3:#2bcfe0; --c4:#3de8a8; --c5:#4de8d0; --c6:#8fe8d4; }
-.glimm-band--deep   { --c1:#004d42; --c2:#006b5c; --c3:#008e79; --c4:#00b16a; --c5:#1a8a7a; --c6:#3de8a8; }
-.glimm-band--aurora { --c1:#3de8a8; --c2:#00b16a; --c3:#2bb7f0; --c4:#008e79; --c5:#5ad0c8; --c6:#7ad6ff; }
-.glimm-band--glow   { --c1:#a6e84d; --c2:#3de8a8; --c3:#00b16a; --c4:#f0d34d; --c5:#008e79; --c6:#5ae0c8; }
+.glimm-band--stasho { --c1:#e2e8f0; --c2:#cbd5e1; --c3:#94a3b8; --c4:#64748b; --c5:#475569; --c6:#334155; }
+.glimm-band--mint   { --c1:#f1f5f9; --c2:#e2e8f0; --c3:#cbd5e1; --c4:#94a3b8; --c5:#64748b; --c6:#475569; }
+.glimm-band--lagoon { --c1:#94a3b8; --c2:#64748b; --c3:#475569; --c4:#334155; --c5:#78859a; --c6:#a8b4c4; }
+.glimm-band--deep   { --c1:#1e293b; --c2:#334155; --c3:#475569; --c4:#64748b; --c5:#2a313c; --c6:#3d4654; }
+.glimm-band--aurora { --c1:#cbd5e1; --c2:#94a3b8; --c3:#64748b; --c4:#475569; --c5:#b4bcc8; --c6:#d0d6df; }
+.glimm-band--glow   { --c1:#f8fafc; --c2:#e2e8f0; --c3:#cbd5e1; --c4:#94a3b8; --c5:#64748b; --c6:#475569; }
 
 .glimm-band--sweep {
   animation:

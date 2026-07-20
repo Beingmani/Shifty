@@ -1,9 +1,12 @@
 import React from 'react';
 import ThemeToggle from './ThemeToggle.jsx';
+import ProfileSwitcher from './ProfileSwitcher.jsx';
 import appIcon from '@assets/app-icon.png';
 
 export default function Navbar({
-  profileName,
+  profiles,
+  selectedId,
+  activeProfileId,
   hotkey,
   canActivate,
   activating,
@@ -11,6 +14,8 @@ export default function Navbar({
   onOpenSettings,
   onActivate,
   onGoHome,
+  onSelectProfile,
+  onAddProfile,
 }) {
   const hotkeyLabel =
     hotkey
@@ -27,12 +32,18 @@ export default function Navbar({
             <img src={appIcon} alt="" className="brand-icon" width={28} height={28} draggable={false} />
             <span className="brand-wordmark">Shifty</span>
           </button>
-          {profileName && (
+          {profiles?.length > 0 && (
             <>
               <span className="brand-separator" aria-hidden="true">
                 /
               </span>
-              <span className="brand-context">{profileName}</span>
+              <ProfileSwitcher
+                profiles={profiles}
+                selectedId={selectedId}
+                activeProfileId={activeProfileId}
+                onSelect={onSelectProfile}
+                onAdd={onAddProfile}
+              />
             </>
           )}
         </div>

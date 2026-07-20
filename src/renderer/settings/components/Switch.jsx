@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** Stasho-style toggle: 38×22 pill track, brand-green when on. */
+/** Stasho-style toggle: 38×22 pill track, brand accent when on. */
 export default function Switch({
   checked,
   onChange,

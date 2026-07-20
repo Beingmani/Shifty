@@ -51,7 +51,7 @@ body,
   height: 28px;
   border-radius: 8px;
   object-fit: cover;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-icon-sm);
 }
 
 .mb-brand-text {
@@ -114,8 +114,8 @@ body,
 }
 
 .mb-item.is-active {
-  background: var(--accent-bg-faint, color-mix(in srgb, var(--brand-primary) 12%, transparent));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand-primary) 22%, transparent) inset;
+  background: var(--selection-bg);
+  box-shadow: 0 0 0 1px var(--selection-ring) inset;
 }
 
 .mb-item:disabled {
@@ -210,7 +210,7 @@ body,
   border-radius: 7px;
   overflow: hidden;
   background: transparent;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow-icon-md);
   transform-origin: 50% 55%;
 }
 
@@ -235,13 +235,6 @@ body,
   font-size: 11px;
   font-weight: 700;
   background: var(--chrome-fill-3);
-  color: var(--chrome-text-muted);
-}
-
-.mb-stack-more {
-  background: var(--chrome-fill-3);
-  font-size: 10px;
-  font-weight: 750;
   color: var(--chrome-text-muted);
 }
 
@@ -289,9 +282,10 @@ body,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
+  min-width: 0;
   height: var(--control-height, 34px);
-  padding: 0 10px;
+  padding: 0 8px;
   border: 1px solid var(--chrome-fill-3);
   border-radius: var(--control-radius, 10px);
   background: var(--chrome-fill-1);
@@ -301,10 +295,21 @@ body,
   letter-spacing: -0.01em;
   color: var(--chrome-text-muted);
   cursor: pointer;
+  white-space: nowrap;
   transition:
     background var(--dur-instant, 80ms) ease,
     border-color var(--dur-instant, 80ms) ease,
     color var(--dur-instant, 80ms) ease;
+}
+
+.mb-footer-btn svg {
+  flex-shrink: 0;
+}
+
+.mb-footer-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mb-footer-btn:hover {

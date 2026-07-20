@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Switch from './Switch.jsx';
 import TimeField from './TimeField.jsx';
 
@@ -51,11 +51,28 @@ export default function ScheduleEditor({
   }
 
   const quickId = QUICK.find((q) => sameDays(q.days, schedule.days))?.id ?? null;
-  const timePresetId = useMemo(
+  const matchedPresetId = useMemo(
     () =>
       TIME_PRESETS.find((p) => p.start === schedule.start && p.end === schedule.end)?.id ?? null,
     [schedule.start, schedule.end]
   );
+  const [customPinned, setCustomPinned] = useState(() => matchedPresetId == null);
+  const isCustom = customPinned || matchedPresetId == null;
+  const timePresetId = isCustom ? null : matchedPresetId;
+
+  function selectPreset(preset) {
+    setCustomPinned(false);
+    patch({ start: preset.start, end: preset.end });
+  }
+
+  function selectCustom() {
+    setCustomPinned(true);
+  }
+
+  function patchTime(partial) {
+    setCustomPinned(true);
+    patch(partial);
+  }
 
   if (!schedule.enabled) {
     return (
@@ -112,7 +129,7 @@ export default function ScheduleEditor({
             <TimeField
               label="Starts"
               value={schedule.start}
-              onChange={(start) => patch({ start })}
+              onChange={(start) => patchTime({ start })}
             />
             <span className="sched-times-sep" aria-hidden="true">
               –
@@ -120,7 +137,7 @@ export default function ScheduleEditor({
             <TimeField
               label="Ends"
               value={schedule.end}
-              onChange={(end) => patch({ end })}
+              onChange={(end) => patchTime({ end })}
             />
           </div>
 
@@ -132,22 +149,22 @@ export default function ScheduleEditor({
                 className={`sched-time-preset ${timePresetId === p.id ? 'is-on' : ''}`}
                 aria-pressed={timePresetId === p.id}
                 title={`${p.label}: ${p.hint}`}
-                onClick={() => patch({ start: p.start, end: p.end })}
+                onClick={() => selectPreset(p)}
               >
                 <span className="sched-time-preset-label">{p.label}</span>
                 <span className="sched-time-preset-hint">{p.hint}</span>
               </button>
             ))}
-            <span
-              className={`sched-time-preset sched-time-preset-custom ${
-                timePresetId == null ? 'is-on' : ''
-              }`}
-              aria-current={timePresetId == null ? 'true' : undefined}
+            <button
+              type="button"
+              className={`sched-time-preset sched-time-preset-custom ${isCustom ? 'is-on' : ''}`}
+              aria-pressed={isCustom}
               title="Custom times — use Starts and Ends pickers"
+              onClick={selectCustom}
             >
               <span className="sched-time-preset-label">Custom</span>
               <span className="sched-time-preset-hint">Your times</span>
-            </span>
+            </button>
           </div>
         </div>
 
