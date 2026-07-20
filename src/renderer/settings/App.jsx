@@ -76,6 +76,12 @@ export default function App() {
     setSettingsOpen(true);
   }, []);
 
+  React.useEffect(() => {
+    return window.shifty?.onSettingsOpenSection?.((section) => {
+      openSettings(section || 'appearance');
+    });
+  }, [openSettings]);
+
   const openOnboarding = useCallback(() => {
     setOnboardingOpen(true);
   }, []);

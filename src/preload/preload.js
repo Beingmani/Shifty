@@ -53,7 +53,7 @@ contextBridge.exposeInMainWorld('shifty', {
   hideSwitcher: () => ipcRenderer.send('switcher:hide'),
   openSwitcher: () => ipcRenderer.send('switcher:open'),
   switchTo: (id) => ipcRenderer.send('switcher:activate', id),
-  openSettings: () => ipcRenderer.send('settings:openWindow'),
+  openSettings: (section) => ipcRenderer.send('settings:openWindow', section),
   hideMenubar: () => ipcRenderer.send('menubar:hide'),
   quitApp: () => ipcRenderer.send('app:quit'),
 
@@ -67,6 +67,7 @@ contextBridge.exposeInMainWorld('shifty', {
   onSwitcherShown: (cb) => subscribe('switcher:shown', cb),
   onMenubarShown: (cb) => subscribe('menubar:shown', cb),
   onThemeUpdated: (cb) => subscribe('theme:updated', cb),
+  onSettingsOpenSection: (cb) => subscribe('settings:openSection', cb),
 
   appInfo: {
     get: () => ipcRenderer.invoke('app:get-info'),

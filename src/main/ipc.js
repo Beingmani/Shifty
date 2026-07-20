@@ -87,7 +87,7 @@ export function register() {
     launcher.activateProfile(id, { source: 'switcher' });
   });
   ipcMain.on('switcher:open', () => windows.toggleSwitcher());
-  ipcMain.on('settings:openWindow', () => windows.showSettings());
+  ipcMain.on('settings:openWindow', (_e, section) => windows.showSettings(section));
   ipcMain.on('menubar:hide', () => windows.hideMenubar());
   ipcMain.on('app:quit', () => app.quit());
 

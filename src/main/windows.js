@@ -72,11 +72,17 @@ function load(win, page) {
   }
 }
 
-export function showSettings() {
+function sendSettingsSection(win, section) {
+  if (!section || !win || win.isDestroyed()) return;
+  win.webContents.send('settings:openSection', section);
+}
+
+export function showSettings(section) {
   if (settingsWindow && !settingsWindow.isDestroyed()) {
     settingsWindow.show();
     settingsWindow.focus();
     setDockVisible(true);
+    sendSettingsSection(settingsWindow, section);
     return settingsWindow;
   }
   settingsWindow = new BrowserWindow({
@@ -97,6 +103,9 @@ export function showSettings() {
   });
   load(settingsWindow, 'settings.html');
   attachSettingsDockHandlers(settingsWindow);
+  settingsWindow.webContents.once('did-finish-load', () => {
+    sendSettingsSection(settingsWindow, section);
+  });
   settingsWindow.once('ready-to-show', () => {
     settingsWindow.show();
     settingsWindow.focus();

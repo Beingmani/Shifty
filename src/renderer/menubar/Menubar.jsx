@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Settings, AppWindow, Power } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ExternalLink, Info, Moon, Power, Settings, Sun } from 'lucide-react';
 import { useStore } from '../shared/useStore.js';
-import { applyResolvedTheme } from '../shared/theme.js';
+import { applyResolvedTheme, resolveAppearance } from '../shared/theme.js';
+import { applyAppearanceAnimated } from '../shared/themeTransition.js';
 import AppIcon from '../settings/components/AppIcon.jsx';
 import appIcon from '@assets/app-icon.png';
 
 const MAX_STACK = 4;
+const ICON = { size: 14, strokeWidth: 1.9, 'aria-hidden': true };
 
 function stackPose(i) {
   const leanLeft = i % 2 === 0;
@@ -36,6 +38,46 @@ function AppStack({ apps, iconByPath }) {
   );
 }
 
+function MenubarThemeToggle() {
+  const [appearance, setAppearance] = useState(
+    () => localStorage.getItem('shifty.appearance') || window.shifty?.app?.appearance || 'system'
+  );
+  const flippingRef = useRef(false);
+  const isDark = resolveAppearance(appearance) === 'dark';
+
+  useEffect(() => {
+    return window.shifty?.onStoreChanged?.((snap) => {
+      if (snap?.settings?.appearance) setAppearance(snap.settings.appearance);
+    });
+  }, []);
+
+  async function flip() {
+    if (flippingRef.current) return;
+    flippingRef.current = true;
+    const next = isDark ? 'light' : 'dark';
+    try {
+      await applyAppearanceAnimated(next, appearance, {
+        onSwap: () => setAppearance(next),
+      });
+      await window.shifty.setSettings({ appearance: next });
+    } finally {
+      flippingRef.current = false;
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      className="mb-theme-toggle"
+      onClick={flip}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Light mode' : 'Dark mode'}
+    >
+      {isDark ? <Sun size={15} strokeWidth={1.6} aria-hidden="true" /> : <Moon size={15} strokeWidth={1.6} aria-hidden="true" />}
+    </button>
+  );
+}
+
 export default function Menubar() {
   const snapshot = useStore();
   const [iconByPath, setIconByPath] = useState(() => new Map());
@@ -43,10 +85,6 @@ export default function Menubar() {
 
   const profiles = snapshot?.profiles ?? [];
   const activeId = snapshot?.activeProfileId ?? null;
-  const active = useMemo(
-    () => profiles.find((p) => p.id === activeId) ?? null,
-    [profiles, activeId]
-  );
 
   useEffect(() => {
     return window.shifty.onMenubarShown?.((payload) => {
@@ -97,24 +135,28 @@ export default function Menubar() {
     window.shifty.hideMenubar?.();
   }
 
+  function openSettings() {
+    window.shifty.openSettings('appearance');
+    window.shifty.hideMenubar?.();
+  }
+
+  function openAbout() {
+    window.shifty.openSettings('about');
+    window.shifty.hideMenubar?.();
+  }
+
   function quitApp() {
     window.shifty.quitApp?.();
   }
 
   return (
-    <div className="mb-panel">
+    <div className="mb-panel" data-menubar-shell>
       <header className="mb-header">
         <div className="mb-brand">
           <img src={appIcon} alt="" className="mb-brand-icon" width={28} height={28} draggable={false} />
-          <div className="mb-brand-text">
-            <span className="mb-brand-name">Shifty</span>
-            <span className="mb-brand-sub">
-              {active
-                ? `Active · ${active.emoji || ''} ${active.name}`.trim()
-                : 'Switch profile'}
-            </span>
-          </div>
+          <span className="mb-brand-name">Shifty</span>
         </div>
+        <MenubarThemeToggle />
       </header>
 
       <div className="mb-list chromeScroll" role="listbox" aria-label="Profiles">
@@ -122,7 +164,7 @@ export default function Menubar() {
           <div className="mb-empty">
             <p className="mb-empty-text">No profiles yet</p>
             <button type="button" className="mb-link" onClick={openShifty}>
-              Open Settings to create one
+              Open Shifty to create one
             </button>
           </div>
         ) : (
@@ -164,22 +206,37 @@ export default function Menubar() {
       </div>
 
       <footer className="mb-footer">
-        <button type="button" className="mb-footer-btn" onClick={openShifty} title="Open Shifty">
-          <AppWindow size={13} strokeWidth={2.25} aria-hidden="true" />
-          <span className="mb-footer-label">Open</span>
-        </button>
-        <button type="button" className="mb-footer-btn" onClick={openShifty} title="Settings">
-          <Settings size={13} strokeWidth={2.25} aria-hidden="true" />
-          <span className="mb-footer-label">Settings</span>
+        <button type="button" className="mb-footer-primary" onClick={openShifty}>
+          <ExternalLink {...ICON} />
+          <span>Open Shifty</span>
         </button>
         <button
           type="button"
-          className="mb-footer-btn mb-footer-quit"
+          className="mb-footer-icon"
+          onClick={openSettings}
+          title="Settings"
+          aria-label="Settings"
+        >
+          <Settings {...ICON} />
+        </button>
+        <button
+          type="button"
+          className="mb-footer-icon"
+          onClick={openAbout}
+          title="About Shifty"
+          aria-label="About Shifty"
+        >
+          <Info {...ICON} />
+        </button>
+        <span className="mb-footer-divider" aria-hidden="true" />
+        <button
+          type="button"
+          className="mb-footer-icon mb-footer-quit"
           onClick={quitApp}
           title="Quit Shifty"
+          aria-label="Quit Shifty"
         >
-          <Power size={13} strokeWidth={2.25} aria-hidden="true" />
-          <span className="mb-footer-label">Quit</span>
+          <Power {...ICON} />
         </button>
       </footer>
     </div>

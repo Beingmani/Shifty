@@ -27,10 +27,14 @@ body,
   font-family: var(--font-ui);
 }
 
-/* ── Header (same density as switcher header) ────────────────────────── */
+/* ── Header ──────────────────────────────────────────────────────────── */
 .mb-header {
   flex-shrink: 0;
-  padding: 12px 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 10px;
   border-bottom: 1px solid var(--chrome-border-subtle, var(--chrome-border));
 }
 
@@ -39,10 +43,6 @@ body,
   align-items: center;
   gap: 10px;
   min-width: 0;
-  height: 40px;
-  padding: 0 10px;
-  border-radius: 12px;
-  background: var(--chrome-fill-2);
 }
 
 .mb-brand-icon {
@@ -54,13 +54,6 @@ body,
   box-shadow: var(--shadow-icon-sm);
 }
 
-.mb-brand-text {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
 .mb-brand-name {
   font-size: 13px;
   font-weight: 700;
@@ -68,13 +61,29 @@ body,
   color: var(--chrome-text);
 }
 
-.mb-brand-sub {
-  font-size: 11px;
-  font-weight: 550;
+.mb-theme-toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--control-height, 34px);
+  height: var(--control-height, 34px);
+  border: 1px solid var(--chrome-fill-3);
+  border-radius: var(--control-radius, 10px);
+  background: var(--chrome-fill-1);
   color: var(--chrome-text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  cursor: pointer;
+  transition:
+    background var(--dur-instant, 80ms) ease,
+    border-color var(--dur-instant, 80ms) ease,
+    color var(--dur-instant, 80ms) ease;
+}
+
+.mb-theme-toggle:hover {
+  background: var(--chrome-fill-2);
+  border-color: var(--chrome-border-strong, var(--chrome-fill-3));
+  color: var(--chrome-text);
 }
 
 /* ── Profile list (match switcher rows) ──────────────────────────────── */
@@ -266,56 +275,82 @@ body,
   text-decoration: underline;
 }
 
-/* Footer — chrome buttons like settings */
+/* Footer — Stasho-style primary + icon cluster */
 .mb-footer {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 12px 12px;
+  min-height: 52px;
+  padding: 12px 14px;
   border-top: 1px solid var(--chrome-border-subtle, var(--chrome-border));
 }
 
-.mb-footer-btn {
+.mb-footer-primary {
   appearance: none;
-  flex: 1 1 0;
+  flex: 1 1 auto;
+  min-width: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  min-width: 0;
+  gap: 7px;
   height: var(--control-height, 34px);
-  padding: 0 8px;
+  padding: 0 12px;
   border: 1px solid var(--chrome-fill-3);
   border-radius: var(--control-radius, 10px);
   background: var(--chrome-fill-1);
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 650;
   letter-spacing: -0.01em;
-  color: var(--chrome-text-muted);
+  color: var(--chrome-text);
   cursor: pointer;
   white-space: nowrap;
+  transition:
+    background var(--dur-instant, 80ms) ease,
+    border-color var(--dur-instant, 80ms) ease;
+}
+
+.mb-footer-primary:hover {
+  background: var(--chrome-fill-2);
+  border-color: var(--chrome-border-strong, var(--chrome-fill-3));
+}
+
+.mb-footer-primary svg {
+  flex-shrink: 0;
+}
+
+.mb-footer-icon {
+  appearance: none;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height, 34px);
+  height: var(--control-height, 34px);
+  border: 1px solid var(--chrome-fill-3);
+  border-radius: var(--control-radius, 10px);
+  background: var(--chrome-fill-1);
+  color: var(--chrome-text-muted);
+  cursor: pointer;
   transition:
     background var(--dur-instant, 80ms) ease,
     border-color var(--dur-instant, 80ms) ease,
     color var(--dur-instant, 80ms) ease;
 }
 
-.mb-footer-btn svg {
-  flex-shrink: 0;
-}
-
-.mb-footer-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.mb-footer-btn:hover {
+.mb-footer-icon:hover {
   background: var(--chrome-fill-2);
   border-color: var(--chrome-border-strong, var(--chrome-fill-3));
   color: var(--chrome-text);
+}
+
+.mb-footer-divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 18px;
+  margin: 0 2px;
+  background: var(--chrome-border);
 }
 
 .mb-footer-quit:hover {
