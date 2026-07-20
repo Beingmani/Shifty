@@ -67,4 +67,21 @@ contextBridge.exposeInMainWorld('shifty', {
   onSwitcherShown: (cb) => subscribe('switcher:shown', cb),
   onMenubarShown: (cb) => subscribe('menubar:shown', cb),
   onThemeUpdated: (cb) => subscribe('theme:updated', cb),
+
+  appInfo: {
+    get: () => ipcRenderer.invoke('app:get-info'),
+  },
+
+  shell: {
+    openUrl: (url) => ipcRenderer.invoke('app:open-url', url),
+  },
+
+  updates: {
+    check: () => ipcRenderer.invoke('update:check'),
+    open: () => ipcRenderer.invoke('update:open'),
+    dismiss: (version) => ipcRenderer.invoke('update:dismiss', version),
+    getCurrent: () => ipcRenderer.invoke('update:get-current'),
+  },
+
+  onUpdateAvailable: (cb) => subscribe('update:available', cb),
 });

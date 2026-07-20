@@ -1,4 +1,5 @@
 import React from 'react';
+import { Trash2 } from 'lucide-react';
 import EmojiPicker from './EmojiPicker.jsx';
 
 function StatPills({ appCount, scheduleSummary, scheduleEnabled }) {
@@ -22,6 +23,7 @@ export default function ProfileHero({
   scheduleSummary,
   scheduleEnabled,
   onPatch,
+  onDelete,
 }) {
   return (
     <header className="profile-hero">
@@ -41,11 +43,25 @@ export default function ProfileHero({
             aria-label="Profile name"
           />
         </div>
-        <StatPills
-          appCount={appCount}
-          scheduleSummary={scheduleSummary}
-          scheduleEnabled={scheduleEnabled}
-        />
+        <div className="profile-hero-actions">
+          <StatPills
+            appCount={appCount}
+            scheduleSummary={scheduleSummary}
+            scheduleEnabled={scheduleEnabled}
+          />
+          {onDelete && (
+            <button
+              type="button"
+              className="btn btn-destructive-ghost profile-hero-delete"
+              onClick={onDelete}
+              title="Delete profile"
+              aria-label="Delete profile"
+            >
+              <Trash2 size={13} strokeWidth={2} aria-hidden="true" />
+              Delete
+            </button>
+          )}
+        </div>
       </div>
     </header>
   );

@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useStore } from '../shared/useStore.js';
 import Navbar from './components/Navbar.jsx';
 import ProfileBar from './components/ProfileBar.jsx';
 import ProfileEditor from './components/ProfileEditor.jsx';
 import SettingsModal from './components/SettingsModal.jsx';
 import TemplatePicker from './components/TemplatePicker.jsx';
+import UpdatePill from './components/UpdatePill.jsx';
+import WhatsNewModal from './components/WhatsNewModal.jsx';
 
 export default function App() {
   const snapshot = useStore();
   const [selectedId, setSelectedId] = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsSection, setSettingsSection] = useState('appearance');
   const [templateOpen, setTemplateOpen] = useState(false);
   const [activating, setActivating] = useState(false);
+  const [updateAvailable, setUpdateAvailable] = useState(null);
+  const [whatsNewOpen, setWhatsNewOpen] = useState(false);
 
   React.useEffect(() => {
     if (!snapshot) return;
@@ -19,6 +24,49 @@ export default function App() {
     if (selectedId && !ids.includes(selectedId)) setSelectedId(ids[0] ?? null);
     if (!selectedId && ids.length > 0) setSelectedId(ids[0]);
   }, [snapshot, selectedId]);
+
+  React.useEffect(() => {
+    const seen = localStorage.getItem('shifty.lastSeenVersion');
+    if (seen !== import.meta.env.VITE_APP_VERSION) {
+      const t = window.setTimeout(() => setWhatsNewOpen(true), 1200);
+      return () => window.clearTimeout(t);
+    }
+    return undefined;
+  }, []);
+
+  React.useEffect(() => {
+    const unsub = window.shifty?.onUpdateAvailable?.((payload) => {
+      setUpdateAvailable(payload);
+    });
+    window.shifty?.updates
+      ?.check?.()
+      .then((result) => {
+        if (result?.available && result.version) {
+          setUpdateAvailable({
+            version: result.version,
+            url: result.url,
+            name: result.name,
+            current: result.current,
+          });
+        }
+      })
+      .catch(() => {});
+    return unsub;
+  }, []);
+
+  const closeWhatsNew = useCallback(() => {
+    localStorage.setItem('shifty.lastSeenVersion', import.meta.env.VITE_APP_VERSION);
+    setWhatsNewOpen(false);
+  }, []);
+
+  const openSettings = useCallback((section = 'appearance') => {
+    setSettingsSection(section);
+    setSettingsOpen(true);
+  }, []);
+
+  const onOpenUpdate = useCallback(async () => {
+    await window.shifty?.updates?.open?.();
+  }, []);
 
   if (!snapshot) return null;
 
@@ -54,7 +102,7 @@ export default function App() {
                   canActivate={!!selected}
                   activating={activating}
                   isActiveProfile={selected?.id === snapshot.activeProfileId}
-                  onOpenSettings={() => setSettingsOpen(true)}
+                  onOpenSettings={() => openSettings('appearance')}
                   onActivate={activateSelected}
                   onGoHome={() => setSelectedId(snapshot.profiles[0]?.id ?? null)}
                   onSelectProfile={setSelectedId}
@@ -98,7 +146,21 @@ export default function App() {
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         settings={snapshot.settings}
+        initialSection={settingsSection}
       />
+
+      <WhatsNewModal
+        open={whatsNewOpen}
+        onClose={closeWhatsNew}
+        onViewAll={() => {
+          closeWhatsNew();
+          openSettings('whatsnew');
+        }}
+      />
+
+      {updateAvailable?.version ? (
+        <UpdatePill version={updateAvailable.version} onOpen={onOpenUpdate} />
+      ) : null}
 
       <TemplatePicker
         open={templateOpen}

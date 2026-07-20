@@ -39,6 +39,7 @@ Built for macOS. Local-first — your profiles and settings stay on your Mac.
 | **Real app icons** | Extracted from `.app` bundles (cached locally) |
 | **Light & dark theme** | System-aware UI with manual override |
 | **Toasts** | In-app notifications for schedule prompts and quit offers |
+| **Updates** | Check for updates, release notes, and what's-new modal |
 
 ---
 
@@ -70,9 +71,27 @@ npm run start:clean
 npm run make
 ```
 
-Output appears under `out/make/` (macOS `.zip` via Electron Forge).
+Output appears under `out/make/` — a macOS **`.dmg`** and **`.zip`** (Electron Forge).
 
-> Pre-built releases will be published on [GitHub Releases](https://github.com/Beingmani/Shifty/releases) when available.
+### Download a release
+
+Pre-built builds are on **[GitHub Releases](https://github.com/Beingmani/Shifty/releases)**. Download the DMG, drag Shifty to Applications, and open.
+
+If macOS blocks an unsigned build:
+
+```bash
+xattr -cr /Applications/Shifty.app
+```
+
+### Releasing (maintainers)
+
+See [Docs/release/RELEASING.md](./Docs/release/RELEASING.md). Quick path:
+
+```bash
+./scripts/release.sh 1.0.1
+```
+
+Changelog lives in [CHANGELOG.md](./CHANGELOG.md). The app checks GitHub Releases hourly when running a packaged build.
 
 ---
 
@@ -132,7 +151,7 @@ Shifty/
 
 ## Permissions (macOS)
 
-Shifty may request **Automation** access to quit apps when switching profiles (AppleScript). Launching apps uses the standard `open -a` command. No data is sent to external servers.
+Shifty may request **Automation** access to quit apps when switching profiles (AppleScript). Launching apps uses the standard `open -a` command. Profiles and settings stay local; packaged builds only contact GitHub to check for app updates.
 
 ---
 
@@ -153,6 +172,8 @@ Contributions are welcome — bug fixes, docs, and features. See [CONTRIBUTING.m
 - Import/export profiles  
 - iCloud or file sync for profiles  
 - Windows/Linux are out of scope for now (macOS-specific APIs)
+
+Releases and changelogs are tracked in [CHANGELOG.md](./CHANGELOG.md).
 
 Have an idea? [Open an issue](https://github.com/Beingmani/Shifty/issues).
 

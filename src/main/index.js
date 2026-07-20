@@ -1,5 +1,5 @@
 import './env.js';
-import { app, globalShortcut, nativeTheme } from 'electron';
+import { app, globalShortcut, nativeTheme, ipcMain } from 'electron';
 import * as store from './store.js';
 import * as launcher from './launcher.js';
 import * as scheduler from './scheduler.js';
@@ -8,6 +8,7 @@ import * as tray from './tray.js';
 import * as windows from './windows.js';
 import * as ipc from './ipc.js';
 import { setDockVisible } from './dock.js';
+import { startUpdateChecks } from './updateCheck.js';
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -21,6 +22,10 @@ if (!app.requestSingleInstanceLock()) {
     nativeTheme.themeSource = store.getSettings().appearance ?? 'system';
 
     ipc.register();
+    startUpdateChecks({
+      ipcMain,
+      onNotify: (channel, payload) => windows.broadcast(channel, payload),
+    });
     windows.createSwitcher();
     tray.init({
       activate: (id) => launcher.activateProfile(id, { source: 'tray' }),

@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react';
-import { AppWindow, Calendar, Plus, Trash2, Zap } from 'lucide-react';
+import { AppWindow, Calendar, Plus, Zap } from 'lucide-react';
 import AppPicker, { ADD_APPS_SHORTCUT_LABEL } from './AppPicker.jsx';
 import ScheduleEditor from './ScheduleEditor.jsx';
 import Segment from './Segment.jsx';
@@ -64,6 +64,7 @@ export default function ProfileEditor({ profile }) {
         scheduleSummary={scheduleSummary}
         scheduleEnabled={profile.schedule.enabled}
         onPatch={patch}
+        onDelete={remove}
       />
 
       <SettingBlock
@@ -133,12 +134,6 @@ export default function ProfileEditor({ profile }) {
         }
       />
 
-      <footer className="profile-editor-footer">
-        <button type="button" className="btn btn-destructive-ghost" onClick={remove}>
-          <Trash2 size={13} strokeWidth={2} />
-          Delete profile
-        </button>
-      </footer>
     </div>
   );
 }

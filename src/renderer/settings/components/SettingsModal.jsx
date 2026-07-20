@@ -2,10 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   FlaskConical,
+  Info,
   Keyboard,
   Monitor,
   Moon,
   Palette,
+  ScrollText,
   SlidersHorizontal,
   Sun,
   X,
@@ -13,6 +15,8 @@ import {
 import SettingsNav from './SettingsNav.jsx';
 import SettingsPane from './SettingsPane.jsx';
 import SettingsField from './SettingsField.jsx';
+import SettingsAbout from './SettingsAbout.jsx';
+import SettingsWhatsNew from './SettingsWhatsNew.jsx';
 import Segment from './Segment.jsx';
 import Switch from './Switch.jsx';
 import HotkeyRecorder from './HotkeyRecorder.jsx';
@@ -66,6 +70,25 @@ function buildNavSections(isDev) {
         },
       ],
     },
+    {
+      label: 'About',
+      items: [
+        {
+          id: 'whatsnew',
+          label: "What's new",
+          icon: <ScrollText size={14} {...ICON} />,
+          title: "What's new",
+          description: 'Release notes for recent Shifty versions.',
+        },
+        {
+          id: 'about',
+          label: 'About',
+          icon: <Info size={14} {...ICON} />,
+          title: 'About Shifty',
+          description: 'Version, updates, and support links.',
+        },
+      ],
+    },
   ];
   if (isDev) {
     sections.push({
@@ -88,7 +111,7 @@ function flattenSections(sections) {
   return sections.flatMap((s) => s.items);
 }
 
-export default function SettingsModal({ open, onClose, settings: initialSettings }) {
+export default function SettingsModal({ open, onClose, settings: initialSettings, initialSection = 'appearance' }) {
   const [activeSection, setActiveSection] = useState('appearance');
   const [appearance, setAppearance] = useState('system');
   const [hotkey, setHotkey] = useState('Alt+Space');
@@ -119,8 +142,8 @@ export default function SettingsModal({ open, onClose, settings: initialSettings
     setHotkey(snapshot.hotkey);
     setLaunchAtLogin(snapshot.launchAtLogin);
     setSaveError(null);
-    setActiveSection('appearance');
-  }, [open, initialSettings]);
+    setActiveSection(initialSection);
+  }, [open, initialSettings, initialSection]);
 
   useEffect(() => {
     if (!open) return;
@@ -229,12 +252,18 @@ export default function SettingsModal({ open, onClose, settings: initialSettings
             </div>
           </SettingsField>
         );
+      case 'whatsnew':
+        return <SettingsWhatsNew />;
+      case 'about':
+        return <SettingsAbout />;
       default:
         return null;
     }
   }
 
   if (!open) return null;
+
+  const readOnlySection = activeSection === 'about' || activeSection === 'whatsnew';
 
   return createPortal(
     <div
@@ -274,11 +303,13 @@ export default function SettingsModal({ open, onClose, settings: initialSettings
 
         <footer className="settings-footer">
           <button type="button" className="btn btn-chrome" onClick={handleClose}>
-            Cancel
+            {readOnlySection ? 'Close' : 'Cancel'}
           </button>
-          <button type="button" className="btn btn-primary" onClick={handleSave} disabled={saving}>
-            {saving ? 'Saving…' : 'Save'}
-          </button>
+          {!readOnlySection ? (
+            <button type="button" className="btn btn-primary" onClick={handleSave} disabled={saving}>
+              {saving ? 'Saving…' : 'Save'}
+            </button>
+          ) : null}
         </footer>
       </div>
     </div>,
