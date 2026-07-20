@@ -7,6 +7,7 @@ module.exports = {
     name: 'Shifty',
     appBundleId: 'com.beingmani.shifty',
     icon: './assets/app-icon',
+    extraResource: ['./assets'],
     extendInfo: {
       NSAppleEventsUsageDescription:
         'Shifty quits apps from your previous profile when you switch profiles.',

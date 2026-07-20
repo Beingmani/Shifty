@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/app-icon.png" alt="Shifty app icon" width="128" height="128" />
+</p>
+
 # Shifty
 
 **Profile-based app switcher for macOS.** Group the apps you use together — Work, Personal, Deep Focus — and launch them in one shot. Switch profiles from the menu bar, a Spotlight-style picker, or on a schedule.
@@ -108,7 +112,7 @@ Shifty/
 │       ├── switcher/   # Quick switcher overlay
 │       ├── menubar/    # Menu bar popover
 │       └── toast/      # Notification toasts
-├── assets/             # App icon
+├── assets/             # App icons (Shifty.png source, app-icon.* for runtime/build)
 ├── forge.config.js     # Electron Forge packaging
 └── scripts/            # Dev helpers
 ```

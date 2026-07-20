@@ -1,6 +1,5 @@
-import { Tray, nativeImage, app } from 'electron';
-import fs from 'node:fs';
-import path from 'node:path';
+import { Tray, nativeImage } from 'electron';
+import { resolveTrayIconPath } from './appAsset.js';
 import * as store from './store.js';
 
 let tray = null;
@@ -13,25 +12,17 @@ let handlers = {
 
 /** Template icon for the macOS menu bar (adapts to light/dark bar). */
 function buildTrayIcon() {
-  const appPath = app.getAppPath();
-  const candidates = [
-    path.join(appPath, 'assets/tray-iconTemplate.png'),
-    path.join(appPath, 'assets/tray-icon.png'),
-    path.join(appPath, 'assets/app-icon.png'),
-    path.join(process.cwd(), 'assets/tray-icon.png'),
-    path.join(process.cwd(), 'assets/app-icon.png'),
-  ];
-
-  for (const iconPath of candidates) {
-    if (!fs.existsSync(iconPath)) continue;
+  const iconPath = resolveTrayIconPath();
+  if (iconPath) {
     let icon = nativeImage.createFromPath(iconPath);
-    if (icon.isEmpty()) continue;
-    icon = icon.resize({ width: 18, height: 18, quality: 'best' });
-    icon.setTemplateImage(true);
-    return icon;
+    if (!icon.isEmpty()) {
+      icon = icon.resize({ width: 18, height: 18, quality: 'best' });
+      icon.setTemplateImage(true);
+      return icon;
+    }
   }
 
-  // Fallback ⇄ glyph
+  // Fallback ⇄ glyph when no asset is found
   const size = 18;
   const buf = Buffer.alloc(size * size * 4, 0);
   const set = (x, y, a = 255) => {
