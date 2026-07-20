@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <div className="layout sidebar-collapsed">
+      <div className="layout">
         <div className="main-col">
           <div className="library-stage">
             <div className="toolbar-shell">

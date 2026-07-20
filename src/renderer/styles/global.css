@@ -95,11 +95,6 @@ input:focus-visible {
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
-  --titlebar-left-pad: 16px;
-}
-
-.layout.sidebar-collapsed {
-  --titlebar-left-pad: 104px;
 }
 
 .main-col {

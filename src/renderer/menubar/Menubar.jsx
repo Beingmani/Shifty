@@ -3,6 +3,7 @@ import { Settings, Shuffle, Power } from 'lucide-react';
 import { useStore } from '../shared/useStore.js';
 import { applyResolvedTheme } from '../shared/theme.js';
 import AppIcon from '../settings/components/AppIcon.jsx';
+import appIcon from '@assets/app-icon.png';
 
 const MAX_STACK = 4;
 
@@ -109,9 +110,7 @@ export default function Menubar() {
     <div className="mb-panel">
       <header className="mb-header">
         <div className="mb-brand">
-          <span className="mb-brand-mark" aria-hidden="true">
-            ⇄
-          </span>
+          <img src={appIcon} alt="" className="mb-brand-icon" width={28} height={28} draggable={false} />
           <div className="mb-brand-text">
             <span className="mb-brand-name">Shifty</span>
             <span className="mb-brand-sub">

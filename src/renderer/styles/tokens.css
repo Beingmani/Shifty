@@ -19,7 +19,10 @@
   --pill-radius: 999px;
 
   --grid-gutter: 20px;
-  --stage-inset-left: var(--titlebar-left-pad, 20px);
+  --window-gutter: 16px;
+  /* Reserve space inside chrome rows for macOS traffic lights (hiddenInset). */
+  --titlebar-content-leading: 58px;
+  --stage-inset-left: var(--window-gutter);
   --stage-inset-right: 20px;
   --toolbar-float-height: 78px;
   --profile-bar-gap: 8px;

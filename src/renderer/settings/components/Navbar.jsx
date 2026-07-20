@@ -1,5 +1,6 @@
 import React from 'react';
 import ThemeToggle from './ThemeToggle.jsx';
+import appIcon from '@assets/app-icon.png';
 
 export default function Navbar({
   profileName,
@@ -22,8 +23,9 @@ export default function Navbar({
     <header className="navbar">
       <div className="navbar-inner">
         <div className="navbar-brand-cluster">
-          <button type="button" className="brand-wordmark" onClick={onGoHome}>
-            Shifty
+          <button type="button" className="brand-home" onClick={onGoHome}>
+            <img src={appIcon} alt="" className="brand-icon" width={28} height={28} draggable={false} />
+            <span className="brand-wordmark">Shifty</span>
           </button>
           {profileName && (
             <>

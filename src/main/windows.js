@@ -88,7 +88,7 @@ export function showSettings() {
     icon: loadAppIcon(),
     frame: false,
     titleBarStyle: 'hiddenInset',
-    trafficLightPosition: { x: 22, y: 18 },
+    trafficLightPosition: { x: 16, y: 14 },
     backgroundColor: '#00000000',
     vibrancy: 'sidebar',
     visualEffectState: 'active',
