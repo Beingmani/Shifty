@@ -1,6 +1,6 @@
 import { BrowserWindow, screen, nativeTheme } from 'electron';
 import path from 'node:path';
-import { loadAppIcon } from './dock.js';
+import { loadAppIcon, setDockVisible, settingsWindowNeedsDock } from './dock.js';
 import * as store from './store.js';
 
 let settingsWindow = null;
@@ -13,6 +13,19 @@ let toastWindowHideTimer = null;
 /** Bumps whenever a toast is shown so stale hide timers can’t kill the new one. */
 let toastGeneration = 0;
 let toastCallbacks = { onPrimary: null, onDismiss: null, onTimeout: null };
+
+function syncDockForSettings() {
+  setDockVisible(settingsWindowNeedsDock(settingsWindow));
+}
+
+function attachSettingsDockHandlers(win) {
+  const sync = () => syncDockForSettings();
+  win.on('show', sync);
+  win.on('hide', sync);
+  win.on('minimize', sync);
+  win.on('restore', sync);
+  win.on('closed', sync);
+}
 
 const TOAST_WIDTH = 440;
 const TOAST_HEIGHT = 96;
@@ -38,6 +51,7 @@ export function showSettings() {
   if (settingsWindow && !settingsWindow.isDestroyed()) {
     settingsWindow.show();
     settingsWindow.focus();
+    setDockVisible(true);
     return settingsWindow;
   }
   settingsWindow = new BrowserWindow({
@@ -57,9 +71,11 @@ export function showSettings() {
     webPreferences: { preload: preloadPath },
   });
   load(settingsWindow, 'settings.html');
+  attachSettingsDockHandlers(settingsWindow);
   settingsWindow.once('ready-to-show', () => {
     settingsWindow.show();
     settingsWindow.focus();
+    setDockVisible(true);
   });
   settingsWindow.on('closed', () => {
     settingsWindow = null;

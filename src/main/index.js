@@ -7,7 +7,7 @@ import * as hotkeys from './hotkeys.js';
 import * as tray from './tray.js';
 import * as windows from './windows.js';
 import * as ipc from './ipc.js';
-import { ensureDockVisible } from './dock.js';
+import { setDockVisible } from './dock.js';
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -16,7 +16,8 @@ if (!app.requestSingleInstanceLock()) {
   app.on('second-instance', () => windows.showSettings());
 
   app.whenReady().then(() => {
-    ensureDockVisible();
+    // Menu-bar background app until Settings is opened
+    setDockVisible(false);
     nativeTheme.themeSource = store.getSettings().appearance ?? 'system';
 
     ipc.register();
@@ -49,12 +50,15 @@ if (!app.requestSingleInstanceLock()) {
 
     windows.showSettings();
 
-    // Clicking the Dock icon reopens Settings when the window was closed.
-    app.on('activate', () => windows.showSettings());
+    // Dock click / relaunch — open Settings and show Dock icon
+    app.on('activate', () => {
+      windows.showSettings();
+    });
   });
 
-  // Keep running in the Dock after the settings window closes (standard macOS behavior).
-  app.on('window-all-closed', () => {});
+  app.on('window-all-closed', () => {
+    if (process.platform === 'darwin') setDockVisible(false);
+  });
 
   app.on('will-quit', () => {
     globalShortcut.unregisterAll();
