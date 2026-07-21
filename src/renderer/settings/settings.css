@@ -54,6 +54,12 @@
   border-radius: 8px;
   object-fit: cover;
   box-shadow: var(--shadow-icon-sm);
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+:root[data-theme="dark"] .brand-icon {
+  outline-color: rgba(255, 255, 255, 0.1);
 }
 
 .brand-wordmark {
@@ -107,7 +113,12 @@
   transition:
     background var(--dur-instant) ease,
     border-color var(--dur-instant) ease,
-    color var(--dur-instant) ease;
+    color var(--dur-instant) ease,
+    scale 150ms ease-out;
+}
+
+.brand-profile-trigger:active {
+  scale: 0.96;
 }
 
 .brand-profile-trigger:hover,
@@ -173,7 +184,11 @@
   color: var(--chrome-text);
   text-align: left;
   cursor: pointer;
-  transition: background var(--dur-instant) ease;
+  transition: background var(--dur-instant) ease, scale 150ms ease-out;
+}
+
+.brand-profile-option:active {
+  scale: 0.96;
 }
 
 .brand-profile-option:hover {
@@ -353,7 +368,12 @@
   transition:
     background var(--dur-instant) ease,
     border-color var(--dur-instant) ease,
-    color var(--dur-instant) ease;
+    color var(--dur-instant) ease,
+    scale 150ms ease-out;
+}
+
+.profile-chip:active {
+  scale: 0.96;
 }
 
 .profile-chip:hover {
@@ -601,7 +621,7 @@
   width: 100%;
   aspect-ratio: 1;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 6px;
   background: transparent;
   font-size: 20px;
   line-height: 1;
@@ -609,7 +629,7 @@
   transition:
     background var(--dur-instant) ease,
     border-color var(--dur-instant) ease,
-    transform var(--dur-instant) ease;
+    scale 150ms ease-out;
 }
 
 .emoji-picker-option:hover {
@@ -622,7 +642,7 @@
 }
 
 .emoji-picker-option:active {
-  transform: scale(0.94);
+  scale: 0.96;
 }
 
 .profile-hero-name {
@@ -736,6 +756,7 @@
   font-weight: 650;
   letter-spacing: -0.015em;
   color: var(--chrome-text);
+  text-wrap: balance;
 }
 
 .setting-block-badge {
@@ -854,6 +875,7 @@
   font-size: 1rem;
   font-weight: 650;
   letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 .template-subtitle {
@@ -913,7 +935,12 @@
   transition:
     background var(--dur-instant) ease,
     border-color var(--dur-instant) ease,
-    box-shadow var(--dur-instant) ease;
+    box-shadow var(--dur-instant) ease,
+    scale 150ms ease-out;
+}
+
+.template-card:active:not(:disabled) {
+  scale: 0.96;
 }
 
 .template-card:hover:not(:disabled) {
@@ -1377,6 +1404,15 @@
   display: block;
   object-fit: contain;
   image-rendering: auto;
+}
+
+.app-icon-img {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+:root[data-theme="dark"] .app-icon-img {
+  outline-color: rgba(255, 255, 255, 0.1);
 }
 
 .app-tile-icon img,
@@ -1902,7 +1938,12 @@
   white-space: nowrap;
   transition:
     background var(--dur-instant) ease,
-    color var(--dur-instant) ease;
+    color var(--dur-instant) ease,
+    scale 150ms ease-out;
+}
+
+.sched-quick-btn:active {
+  scale: 0.96;
 }
 
 .sched-quick-btn:hover {
@@ -2158,7 +2199,7 @@
   min-height: 32px;
   padding: 0 4px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background: transparent;
   font: inherit;
   font-size: 13px;
@@ -2168,7 +2209,12 @@
   cursor: pointer;
   transition:
     background var(--dur-instant) ease,
-    color var(--dur-instant) ease;
+    color var(--dur-instant) ease,
+    scale 150ms ease-out;
+}
+
+.time-field-opt:active {
+  scale: 0.96;
 }
 
 .time-field-col-period .time-field-opt {
@@ -2224,7 +2270,12 @@
   cursor: pointer;
   transition:
     background var(--dur-instant) ease,
-    color var(--dur-instant) ease;
+    color var(--dur-instant) ease,
+    scale 150ms ease-out;
+}
+
+.sched-time-preset:active {
+  scale: 0.96;
 }
 
 .sched-time-preset:hover {
@@ -2410,6 +2461,12 @@
   border-radius: 16px;
   object-fit: cover;
   box-shadow: var(--shadow-icon-sm);
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+:root[data-theme="dark"] .welcome-icon {
+  outline-color: rgba(255, 255, 255, 0.1);
 }
 
 .welcome-title {
@@ -2418,6 +2475,7 @@
   font-weight: 650;
   letter-spacing: -0.02em;
   color: var(--chrome-text);
+  text-wrap: balance;
 }
 
 .welcome-description {
@@ -2571,6 +2629,7 @@
   letter-spacing: -0.02em;
   line-height: 1.25;
   color: var(--chrome-text);
+  text-wrap: balance;
 }
 
 .onboarding-tour-divider {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { resolveAppearance } from '../../shared/theme.js';
 import { applyAppearanceAnimated } from '../../shared/themeTransition.js';
 
@@ -49,11 +50,18 @@ export default function ThemeToggle() {
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Light mode' : 'Dark mode'}
     >
-      {isDark ? (
-        <Sun strokeWidth={1.6} size={15} aria-hidden="true" />
-      ) : (
-        <Moon strokeWidth={1.6} size={15} aria-hidden="true" />
-      )}
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.span
+          key={isDark ? 'sun' : 'moon'}
+          initial={{ opacity: 0, scale: 0.25, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, scale: 0.25, filter: 'blur(4px)' }}
+          transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          {isDark ? <Sun strokeWidth={1.6} size={15} aria-hidden="true" /> : <Moon strokeWidth={1.6} size={15} aria-hidden="true" />}
+        </motion.span>
+      </AnimatePresence>
     </button>
   );
 }

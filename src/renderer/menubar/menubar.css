@@ -52,6 +52,12 @@ body,
   border-radius: 8px;
   object-fit: cover;
   box-shadow: var(--shadow-icon-sm);
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+:root[data-theme="dark"] .mb-brand-icon {
+  outline-color: rgba(255, 255, 255, 0.1);
 }
 
 .mb-brand-name {
@@ -77,7 +83,12 @@ body,
   transition:
     background var(--dur-instant, 80ms) ease,
     border-color var(--dur-instant, 80ms) ease,
-    color var(--dur-instant, 80ms) ease;
+    color var(--dur-instant, 80ms) ease,
+    scale 150ms ease-out;
+}
+
+.mb-theme-toggle:active {
+  scale: 0.96;
 }
 
 .mb-theme-toggle:hover {
@@ -111,7 +122,11 @@ body,
   color: var(--chrome-text);
   text-align: left;
   cursor: pointer;
-  transition: background var(--dur-instant, 80ms) ease;
+  transition: background var(--dur-instant, 80ms) ease, scale 150ms ease-out;
+}
+
+.mb-item:active:not(:disabled) {
+  scale: 0.96;
 }
 
 .mb-item:last-child {
@@ -308,7 +323,12 @@ body,
   white-space: nowrap;
   transition:
     background var(--dur-instant, 80ms) ease,
-    border-color var(--dur-instant, 80ms) ease;
+    border-color var(--dur-instant, 80ms) ease,
+    scale 150ms ease-out;
+}
+
+.mb-footer-primary:active {
+  scale: 0.96;
 }
 
 .mb-footer-primary:hover {
@@ -336,7 +356,12 @@ body,
   transition:
     background var(--dur-instant, 80ms) ease,
     border-color var(--dur-instant, 80ms) ease,
-    color var(--dur-instant, 80ms) ease;
+    color var(--dur-instant, 80ms) ease,
+    scale 150ms ease-out;
+}
+
+.mb-footer-icon:active {
+  scale: 0.96;
 }
 
 .mb-footer-icon:hover {

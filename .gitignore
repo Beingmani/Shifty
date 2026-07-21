@@ -96,3 +96,9 @@ out/
 
 # Local Cursor skills (not committed)
 .cursor/skills/
+
+# agent directory
+.agent/
+
+#claude directory
+.claude/
