@@ -78,7 +78,7 @@ function AppAddModal({
         <header className="app-add-header">
           <div className="app-add-header-text">
             <h2 className="app-add-title">Add apps</h2>
-            <p className="app-add-subtitle">Select one or more apps to open with this profile.</p>
+            <p className="app-add-subtitle">Choose apps to open with this profile.</p>
           </div>
           <button
             type="button"
@@ -143,7 +143,7 @@ function AppAddModal({
                         src={a.iconDataUrl}
                         name={a.name}
                         size={40}
-                        loading={iconLoadingPaths?.has(a.path) && !a.iconDataUrl}
+                        loading={(scanning || iconLoadingPaths?.has(a.path)) && !a.iconDataUrl}
                       />
                       {selected && (
                         <span className="app-add-tile-check" aria-hidden="true">
@@ -196,6 +196,7 @@ const AppPicker = forwardRef(function AppPicker({ chosen, onChange }, ref) {
   const [scanning, setScanning] = useState(false);
   const [pendingIconPaths, setPendingIconPaths] = useState(() => new Set());
   const [selectedPaths, setSelectedPaths] = useState(() => new Set());
+  const [iconGeneration, setIconGeneration] = useState(0);
   const selectedByPath = useRef(new Map());
   const searchRef = useRef(null);
   const addingRef = useRef(false);
@@ -204,6 +205,7 @@ const AppPicker = forwardRef(function AppPicker({ chosen, onChange }, ref) {
     setScanning(true);
     try {
       setAllApps(await window.shifty.scanApps({ force }));
+      if (force) setIconGeneration((g) => g + 1);
     } finally {
       setScanning(false);
     }
@@ -295,7 +297,7 @@ const AppPicker = forwardRef(function AppPicker({ chosen, onChange }, ref) {
     return () => {
       cancelled = true;
     };
-  }, [adding, filteredPathKey, allApps !== null]);
+  }, [adding, filteredPathKey, allApps !== null, iconGeneration]);
 
   const openAdd = useCallback(() => {
     selectedByPath.current = new Map();

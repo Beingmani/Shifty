@@ -102,3 +102,6 @@ out/
 
 #claude directory
 .claude/
+
+# agents directory
+.agents/

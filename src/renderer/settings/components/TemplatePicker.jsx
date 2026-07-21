@@ -76,8 +76,7 @@ export default function TemplatePicker({ open, onClose, onCreated }) {
           <div>
             <h2 className="template-title">New profile</h2>
             <p className="template-subtitle">
-              Start from a template — apps found on this Mac are added automatically. You can edit
-              everything after.
+              Pick a template. Matching apps on this Mac are added automatically. Edit everything after.
             </p>
           </div>
           <button

@@ -90,7 +90,7 @@ export default function SettingsAbout({ active, onOpenGuide, onUpdateFound }) {
           <span className="settings-about-version">{version ? `v${version}` : '…'}</span>
         </div>
         <p className="settings-about-tagline">
-          Profile-based app switcher for macOS. Your profiles and settings stay on this Mac.
+          App switcher for macOS. Profiles and settings stay on this Mac.
         </p>
         {updateAvailable?.version ? (
           <span className="settings-about-update-note">Update {updateAvailable.version} available</span>
@@ -179,7 +179,7 @@ export default function SettingsAbout({ active, onOpenGuide, onUpdateFound }) {
       <div className="settings-about-group">
         <h4 className="settings-about-group-title">Built with</h4>
         <p className="settings-about-lead">
-          Shifty is made possible by open-source software. Tap a library to learn more.
+          Built on open-source software. Click a library to learn more.
         </p>
         <div className="settings-about-built-grid">
           {BUILT_WITH.map((lib) => (

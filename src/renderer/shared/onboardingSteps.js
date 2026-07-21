@@ -5,7 +5,7 @@ export function buildOnboardingSteps({ hotkey = '⌥Space', hasProfiles = false 
       target: null,
       placement: 'center',
       title: 'Welcome to Shifty',
-      body: 'Save app sets for Work, Personal, or Focus — then open them all in one shot when you switch context.',
+      body: 'Save app groups for Work, Personal, or Focus. Activate a profile to open them all at once.',
     },
     {
       id: 'profiles',
@@ -13,8 +13,8 @@ export function buildOnboardingSteps({ hotkey = '⌥Space', hasProfiles = false 
       placement: 'bottom',
       title: hasProfiles ? 'Your profiles' : 'Create a profile',
       body: hasProfiles
-        ? 'Tap a chip to edit it, or New profile for another set.'
-        : 'Start here — pick a template and Shifty adds matching apps from this Mac.',
+        ? 'Click a profile to edit it, or add a new one.'
+        : 'Pick a template — Shifty finds matching apps on this Mac and adds them.',
     },
     ...(hasProfiles
       ? [
@@ -36,12 +36,12 @@ export function buildOnboardingSteps({ hotkey = '⌥Space', hasProfiles = false 
       body: `${hotkey} from anywhere — type to filter, Enter to switch, Esc to close.`,
     },
     {
-      id: 'guide',
-      target: 'guide',
-      placement: 'bottom',
-      placementOrder: ['bottom', 'left', 'top'],
-      title: 'You’re all set',
-      body: 'Reopen this guide from ? anytime. Shifty also lives in your menu bar.',
+      id: ‘guide’,
+      target: ‘guide’,
+      placement: ‘bottom’,
+      placementOrder: [‘bottom’, ‘left’, ‘top’],
+      title: ‘That\’s it’,
+      body: ‘Come back to this guide via ? any time. Switch profiles from the menu bar too.’,
     },
   ];
 

@@ -79,7 +79,7 @@ export default function HotkeyRecorder({ value, onSave }) {
         )}
       </div>
       {error && <p className="field-error">{error}</p>}
-      <p className="field-hint">Captures the next key combo you press. Esc cancels.</p>
+      <p className="field-hint">Press any combo. Esc cancels.</p>
     </div>
   );
 }

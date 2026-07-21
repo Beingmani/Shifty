@@ -78,7 +78,7 @@ export default function ScheduleEditor({
     return (
       <div className="sched">
         <p className="sched-off">
-          Off. Flip the switch to choose days and a time window.
+          Turn on scheduling above to set days and a time window.
         </p>
       </div>
     );

@@ -43,7 +43,7 @@ export default function WelcomeEmpty({ hotkey, onGetStarted, onCreated, onShowGu
       <img src={appIcon} alt="" className="welcome-icon" width={64} height={64} draggable={false} />
       <h2 className="welcome-title">Welcome to Shifty</h2>
       <p className="welcome-description">
-        Save app sets for Work, Personal, or Focus — then switch with{' '}
+        Group apps by context. Switch profiles with{' '}
         <kbd className="welcome-kbd">{hotkeyLabel}</kbd> or the menu bar.
       </p>
       <button type="button" className="btn btn-primary welcome-cta" onClick={onGetStarted}>

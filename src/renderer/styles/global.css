@@ -108,7 +108,17 @@ input:focus-visible {
   flex: 1 1 auto;
   flex-direction: column;
   min-width: 0;
-  background: var(--content-bg);
+  background:
+    radial-gradient(ellipse 85% 55% at 18% 0%, rgba(255, 255, 255, 0.6) 0%, transparent 80%),
+    radial-gradient(ellipse 60% 45% at 88% 100%, rgba(255, 255, 255, 0.22) 0%, transparent 75%),
+    var(--content-bg);
+}
+
+:root[data-theme="dark"] .main-col {
+  background:
+    radial-gradient(ellipse 85% 55% at 18% 0%, rgba(100, 116, 139, 0.07) 0%, transparent 80%),
+    radial-gradient(ellipse 60% 45% at 88% 100%, rgba(100, 116, 139, 0.04) 0%, transparent 75%),
+    var(--content-bg);
 }
 
 .toolbar-shell {
@@ -248,5 +258,20 @@ html.theme-morph *::after {
 @media (prefers-reduced-motion: reduce) {
   html.theme-morph,
   html.theme-morph * { transition: none !important; }
+}
+
+/* Grain noise overlay — pointer-events-none fixed sheet above content,
+   below modals/popovers (z-index < 100000). Subtle overlay blend mode
+   adds texture without affecting readability. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.022;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
 }
 

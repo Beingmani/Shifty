@@ -28,8 +28,7 @@ export default function GeneralSettings({ settings }) {
             <div className="section-text">
               <h3 className="section-title">Quick switcher shortcut</h3>
               <p className="section-description">
-                Press it from anywhere to open the switcher — type to filter, ↑↓ or Tab to choose,
-                Enter to switch, Esc to dismiss.
+                Press from anywhere to open the switcher — type to filter, ↑↓ or Tab to move, Enter to switch.
               </p>
             </div>
           </div>
@@ -81,7 +80,7 @@ export default function GeneralSettings({ settings }) {
               checked={settings.launchAtLogin}
               onChange={(launchAtLogin) => window.shifty.setSettings({ launchAtLogin })}
               label="Launch Shifty at login"
-              hint="Keeps your schedules and shortcut always available"
+              hint="Your schedules and shortcut are active from login"
             />
           </div>
         </section>

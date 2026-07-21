@@ -72,7 +72,7 @@ export default function ProfileEditor({ profile }) {
         tourId="apps"
         icon={AppWindow}
         title="Apps"
-        description="Open together when you activate this profile."
+        description="Opens together when you activate this profile."
         badge={appCount > 0 ? appCount : null}
         headerAction={
           <button
@@ -99,7 +99,7 @@ export default function ProfileEditor({ profile }) {
         tourId="schedules"
         icon={Calendar}
         title="Schedule"
-        description="When this profile should kick in."
+        description="When this profile activates automatically."
         headerAction={
           <Switch
             checked={profile.schedule.enabled}
@@ -123,7 +123,7 @@ export default function ProfileEditor({ profile }) {
       <SettingBlock
         icon={Zap}
         title="When switching here"
-        description="What to do with the previous profile’s apps when you land on this one."
+        description="What happens to the previous profile’s apps when you switch here."
         headerAction={
           <div className="quit-policy-header-control">
             <Segment
