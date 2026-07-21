@@ -52,5 +52,11 @@ gh release create "$TAG" \
   "$DMG" \
   "$ZIP"
 
+# gh release create rejects --latest with --prerelease; promote after upload when requested
+if [[ "${RELEASE_AS_LATEST:-}" == "1" && -n "$PRERELEASE_FLAG" ]]; then
+  gh release edit "$TAG" --repo "$PUBLIC_REPO" --latest
+  echo "Marked $TAG as latest pre-release"
+fi
+
 echo ""
 echo "Published: https://github.com/${PUBLIC_REPO}/releases/tag/${TAG}"

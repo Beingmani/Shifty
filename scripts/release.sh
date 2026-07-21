@@ -177,7 +177,11 @@ git push origin "$TAG"
 ok "Committed and pushed $TAG"
 
 step "Publishing GitHub Release"
-bash "$ROOT/scripts/publish-release.sh" "$VERSION"
+if [[ "$VERSION" == *beta* || "$VERSION" == *alpha* || "$VERSION" == *rc* ]]; then
+  RELEASE_AS_LATEST=1 bash "$ROOT/scripts/publish-release.sh" "$VERSION"
+else
+  bash "$ROOT/scripts/publish-release.sh" "$VERSION"
+fi
 
 echo ""
 echo -e "${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"

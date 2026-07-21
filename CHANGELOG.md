@@ -6,6 +6,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+- **Onboarding tour** — Spotlight-style first-run guide with ? button to replay
+- **Welcome screen** — Simple empty state with quick template picks on first launch
+
+### Changed
+- **Menu bar panel** — Stasho-style header (brand + theme toggle) and footer (Open, Settings, About, Quit)
+- **Settings** — Open specific sections (e.g. About) directly from the menu bar
+- **Theme toggle** — Animated light/dark flip in menu bar and settings
+- **Settings & About** — Polished update check, version display, and what's-new flow
+
 ---
 
 ## [1.0.0-beta.1] — 2026-07-20
