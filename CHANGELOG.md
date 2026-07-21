@@ -6,6 +6,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+---
+
+## [1.0.0-beta.2] — 2026-07-21
+
 ### Added
 - **Onboarding tour** — Spotlight-style first-run guide with ? button to replay
 - **Welcome screen** — Simple empty state with quick template picks on first launch
@@ -41,3 +45,4 @@ Initial public release of Shifty — profile-based app switcher for macOS.
 
 [1.0.0]: https://github.com/Beingmani/Shifty/releases/tag/v1.0.0
 [1.0.0-beta.1]: https://github.com/Beingmani/Shifty/releases/tag/v1.0.0-beta.1
+[1.0.0-beta.2]: https://github.com/Beingmani/Shifty/releases/tag/v1.0.0-beta.2

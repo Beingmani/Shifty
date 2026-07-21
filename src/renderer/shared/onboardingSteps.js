@@ -36,12 +36,12 @@ export function buildOnboardingSteps({ hotkey = '⌥Space', hasProfiles = false 
       body: `${hotkey} from anywhere — type to filter, Enter to switch, Esc to close.`,
     },
     {
-      id: ‘guide’,
-      target: ‘guide’,
-      placement: ‘bottom’,
-      placementOrder: [‘bottom’, ‘left’, ‘top’],
-      title: ‘That\’s it’,
-      body: ‘Come back to this guide via ? any time. Switch profiles from the menu bar too.’,
+      id: 'guide',
+      target: 'guide',
+      placement: 'bottom',
+      placementOrder: ['bottom', 'left', 'top'],
+      title: "That's it",
+      body: 'Come back to this guide via ? any time. Switch profiles from the menu bar too.',
     },
   ];
 

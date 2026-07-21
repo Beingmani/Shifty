@@ -1,7 +1,7 @@
 {
   "name": "shifty",
   "productName": "Shifty",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Profile-based app switcher for macOS — open your Work or Personal apps in one shot.",
   "main": ".vite/build/index.js",
   "private": false,
